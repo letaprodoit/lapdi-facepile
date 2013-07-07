@@ -79,18 +79,18 @@ function fn_tsp_facepile_display ($args = null)
 		$fp = array_merge( $TSPF_OPTIONS, $args );
     
     // User settings
-    $title        = $fp['title'];
-    $shownames     = $fp['shownames'];
-    $tspf_rows    = $fp['tspf_rows'];
-    $tspf_cols    = $fp['tspf_cols'];
-    $widththumb   = $fp['widththumb'];
-    $heightthumb  = $fp['heightthumb'];
-    $before_title = $fp['beforetitle'];
-    $after_title  = $fp['aftertitle'];
+    $title        	= $fp['title'];
+    $shownames     	= $fp['shownames'];
+    $tspf_rows    	= $fp['tspf_rows'];
+    $tspf_cols    	= $fp['tspf_cols'];
+    $widththumb   	= $fp['widththumb'];
+    $heightthumb  	= $fp['heightthumb'];
+    $beforetitle 	= $fp['beforetitle'];
+    $aftertitle  	= $fp['aftertitle'];
     
     // If there is a title insert before/after title tags
     if (!empty($title)) {
-        echo $before_title . $title . $after_title;
+        echo $beforetitle . $title . $aftertitle;
     }
     
     global $wpdb;
@@ -201,8 +201,8 @@ class TSP_Facepile_Widget extends WP_Widget
             'tspf_cols' 	=> $instance['tspf_cols'],
             'widththumb' 	=> $instance['widththumb'],
             'heightthumb'	=> $instance['heightthumb'],
-            'beforetitle' 	=> $before_title,
-            'aftertitle' 	=> $after_title
+            'beforetitle' 	=> $beforetitle,
+            'aftertitle' 	=> $aftertitle
         );
         
         // Display the widget
@@ -219,11 +219,13 @@ class TSP_Facepile_Widget extends WP_Widget
         $instance = $old_instance;
         // Update the widget data
         $instance['title']         = strip_tags($new_instance['title']);
-        $instance['shownames']      = $new_instance['shownames'];
+        $instance['shownames']     = $new_instance['shownames'];
         $instance['tspf_rows']     = $new_instance['tspf_rows'];
         $instance['tspf_cols']     = $new_instance['tspf_cols'];
         $instance['widththumb']    = $new_instance['widththumb'];
         $instance['heightthumb']   = $new_instance['heightthumb'];
+        $instance['beforetitle']   = $new_instance['beforetitle'];
+        $instance['aftertitle']    = $new_instance['aftertitle'];
         return $instance;
     }
     
@@ -308,6 +310,28 @@ class TSP_Facepile_Widget extends WP_Widget
    <label for="<?php
         echo $this->get_field_id('heightthumb'); ?>"><?php
         _e('Thumbnail Height', 'tsp_facepile') ?></label>
+</p>
+
+<!-- Before title -->
+<p>
+   <label for="<?php
+        echo $this->get_field_id('beforetitle'); ?>"><?php
+        _e('HTML Before Title', 'tsp_featured_categories') ?></label>
+   <input id="<?php
+        echo $this->get_field_id('beforetitle'); ?>" name="<?php
+        echo $this->get_field_name('beforetitle'); ?>" value="<?php
+        echo $instance['beforetitle']; ?>" style="width:20%;" />
+</p>
+
+<!-- After title -->
+<p>
+   <label for="<?php
+        echo $this->get_field_id('aftertitle'); ?>"><?php
+        _e('HTML After Title', 'tsp_featured_categories') ?></label>
+   <input id="<?php
+        echo $this->get_field_id('aftertitle'); ?>" name="<?php
+        echo $this->get_field_name('aftertitle'); ?>" value="<?php
+        echo $instance['aftertitle']; ?>" style="width:20%;" />
 </p>
    <?php
     }
