@@ -296,7 +296,7 @@ class TSP_Facepile_Widget extends WP_Widget
         echo $instance['widththumb']; ?>" style="width:20%;" />
    <label for="<?php
         echo $this->get_field_id('widththumb'); ?>"><?php
-        _e('Width Thumbnail', 'tsp_facepile') ?></label>
+        _e('Thumbnail Width', 'tsp_facepile') ?></label>
 </p>
 
 <!-- Choose the thumbnail height -->
@@ -307,7 +307,7 @@ class TSP_Facepile_Widget extends WP_Widget
         echo $instance['heightthumb']; ?>" style="width:20%;" />
    <label for="<?php
         echo $this->get_field_id('heightthumb'); ?>"><?php
-        _e('Height Thumbnail', 'tsp_facepile') ?></label>
+        _e('Thumbnail Height', 'tsp_facepile') ?></label>
 </p>
    <?php
     }

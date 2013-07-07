@@ -36,9 +36,10 @@ if (! function_exists('fn_tsp_plugins_add_menu_render') ){
 		$array_recomend = array();
 		$count_activate = $count_install = $count_recomend = 0;
 		$array_plugins	= array(
-			array( 'tsp_featured_posts\/tsp_featured_posts.php', 'TSP Featured Posts', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/featured-posts-for-wordpress.html', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/featured-posts-for-wordpress.html', '/wp-admin/plugin-install.php?tab=search&type=term&s=TSP+Featured+Posts&plugin-search-input=Search+Plugins', 'admin.php?page=tsp_featured_posts.php' ), 
-			array( 'tsp_facepile\/tsp_facepile.php', 'TSP Facepile', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/facepile-for-wordpress.html', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/facepile-for-wordpress.html', '/wp-admin/plugin-install.php?tab=search&type=term&s=TSP+Facepile&plugin-search-input=Search+Plugins', 'admin.php?page=tsp_facepile.php' ), 
-			array( 'tsp_disable_autosave\/tsp_disable_autosave.php', 'TSP Disable Auto-Save', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/disable-autosave-for-wordpress.html', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/disable-autosave-for-wordpress.html', '/wp-admin/plugin-install.php?tab=search&type=term&s=TSP+Disable+Autosave&plugin-search-input=Search+Plugins', '#' ), 
+			array( 'tsp_featured_categories\/tsp_featured_categories.php', 'Featured Categories', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/featured-categories-for-wordpress.html', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/featured-categories-for-wordpress.html', '/wp-admin/plugin-install.php?tab=search&type=term&s=TSP+Featured+Categories&plugin-search-input=Search+Plugins', 'admin.php?page=tsp_featured_categories.php' ), 
+			array( 'tsp_featured_posts\/tsp_featured_posts.php', 'Featured Posts', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/featured-posts-for-wordpress.html', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/featured-posts-for-wordpress.html', '/wp-admin/plugin-install.php?tab=search&type=term&s=TSP+Featured+Posts&plugin-search-input=Search+Plugins', 'admin.php?page=tsp_featured_posts.php' ), 
+			array( 'tsp_featured_categories\/tsp_featured_categories.php', 'Featured Categories', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/facepile-for-wordpress.html', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/facepile-for-wordpress.html', '/wp-admin/plugin-install.php?tab=search&type=term&s=TSP+Facepile&plugin-search-input=Search+Plugins', 'admin.php?page=tsp_featured_categories.php' ), 
+			array( 'tsp_disable_autosave\/tsp_disable_autosave.php', 'Disable Auto-Save', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/disable-autosave-for-wordpress.html', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/disable-autosave-for-wordpress.html', '/wp-admin/plugin-install.php?tab=search&type=term&s=TSP+Disable+Autosave&plugin-search-input=Search+Plugins', '#' ), 
 		);
 		foreach ( $array_plugins as $plugins ) {
 			if( 0 < count( preg_grep( "/".$plugins[0]."/", $active_plugins ) ) ) {
@@ -274,7 +275,7 @@ function fn_tsp_facepile_register_settings() {
 function fn_tsp_facepile_add_admin_menu() 
 {
 	add_menu_page( 'TSP Plugins', 'TSP Plugins', 'manage_options', 'tsp_plugins', 'fn_tsp_plugins_add_menu_render', WP_CONTENT_URL."/plugins/tsp_facepile/images/tsp_icon_16.png", 2617638); 
-	add_submenu_page('tsp_plugins', __( 'TSP Facepile', 'tsp_facepile' ), __( 'TSP Facepile', 'tsp_facepile' ), 'manage_options', "tsp_facepile.php", 'fn_tsp_facepile_settings_page');
+	add_submenu_page('tsp_plugins', __( 'Facepile', 'tsp_facepile' ), __( 'Facepile', 'tsp_facepile' ), 'manage_options', "tsp_facepile.php", 'fn_tsp_facepile_settings_page');
 
 	//call register settings function
 	add_action( 'admin_init', 'fn_tsp_facepile_register_settings' );
