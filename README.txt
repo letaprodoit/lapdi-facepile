@@ -1,7 +1,7 @@
 === TSP Facepile ===
 Contributors: sharrondenice
 Donate link: http://www.thesoftwarepeople.com/software/plugins/wordpress/facepile-for-wordpress.html
-Tags: disable autosave
+Tags: display faces tiles members list grid the software people
 Requires at least: 3.3
 Tested up to: 3.5.1
 Stable tag: master
