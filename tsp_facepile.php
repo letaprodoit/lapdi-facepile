@@ -24,6 +24,8 @@ define('TSPF_ABS_PATH', $plugin_abs_path);
 $plugin_url = WP_CONTENT_URL . '/plugins/' . plugin_basename(dirname(__FILE__)) . '/';
 define('TSPF_URL_PATH', $plugin_url);
 
+define('TSPF_TEMPLATE_PATH', TSPF_ABS_PATH . '/templates');
+
 // Set the file path
 $file_path    = $plugin_abs_path . DIRECTORY_SEPARATOR . basename(__FILE__);
 
@@ -69,9 +71,16 @@ add_action('wp_print_styles', 'fn_tsp_facepile_enqueue_styles');
 //--------------------------------------------------------
 // Show simple featured links
 //--------------------------------------------------------
-function fn_tsp_facepile_display ($args = null)
+function fn_tsp_facepile_display ($args = null, $echo = true)
 {
     global $TSPF_OPTIONS;
+
+	$smarty = new Smarty;
+	$smarty->setTemplateDir(TSPF_TEMPLATE_PATH);
+	$smarty->setCompileDir(TSPF_TEMPLATE_PATH.'/compiled/');
+	$smarty->setCacheDir(TSPF_TEMPLATE_PATH.'/cache/');
+
+	$return_HTML = "";
 
 	$fp = $TSPF_OPTIONS;
 	
@@ -85,12 +94,12 @@ function fn_tsp_facepile_display ($args = null)
     $tspf_cols    	= $fp['tspf_cols'];
     $widththumb   	= $fp['widththumb'];
     $heightthumb  	= $fp['heightthumb'];
-    $beforetitle 	= $fp['beforetitle'];
-    $aftertitle  	= $fp['aftertitle'];
+    $beforetitle 	= html_entity_decode($fp['beforetitle']);
+    $aftertitle  	= html_entity_decode($fp['aftertitle']);
     
     // If there is a title insert before/after title tags
     if (!empty($title)) {
-        echo $beforetitle . $title . $aftertitle;
+        $return_HTML .= $beforetitle . $title . $aftertitle;
     }
     
     global $wpdb;
@@ -104,47 +113,75 @@ function fn_tsp_facepile_display ($args = null)
 	$query = "SELECT $wpdb->users.ID FROM $wpdb->users INNER JOIN $wpdb->usermeta ON $wpdb->users.ID = $wpdb->usermeta.user_id WHERE $wpdb->usermeta.meta_key = 'wp_user_level' AND $wpdb->usermeta.meta_value = '0' ORDER BY RAND() LIMIT 0, $user_count";
 	$users = $wpdb->get_results($query);
 	
-	if ($users)
+	$entry_cnt = 0;
+	$num_entries = $user_count;
+
+	if (!empty($users))
 	{
-	?>	
-		<div class="tspf_wp_user_grid">
-		  <table class="tspf_wp_user_table">
-		    <?php
-		      for ($i=0; $i < $tspf_rows; $i++) { 
-		        ?>
-		          <tr>
-		            <?php
-			            for ($j=0; $j < $tspf_cols; $j++) { 
-							$user_index = ($i * $tspf_cols) + $j;
-							
-							if($user_index >= $user_count)
-								break;
+	    // Store values into Smarty
+	    foreach ($fp as $key => $val)
+	    {
+	    	$smarty->assign("$key", $val, true);
+	    }
 		
-			              	$user = $users[$user_index];
-			              	$curauth = get_userdata($user->ID);
-			              	
-							//$gravatar_size = get_option('wpu_gravatar_size');
-							$gravatar_type = get_option('wpu_gravatar_type');
-							$display_gravatar = get_avatar($curauth->user_email, $widththumb, $gravatar_type);
-		              ?>
-			                <td>
-		                		<div class="tspf_wp_user_table_cell">
-		                			<?php echo $display_gravatar; ?>
-		                		</div>
-			                </td>
-		              <?php
-		            } //end for cols
-		            ?>
-		          </tr>
-		        <?php
-		      } // end for rows
-		    ?>
-		  </table>
-		</div><br>
-		<span class="tspf_wp_user_grid_text">Total Members: <?php echo $total_users; ?></span>
+
+       	for ($i=0; $i < $tspf_rows; $i++) 
+       	{ 
+			$start_row = true;
+			$end_row = false;
+			
+			for ($j=0; $j < $tspf_cols; $j++) 
+			{ 		        
+		        $entry_cnt++;
 		
-<?php
+				if ($entry_cnt == 1)
+					$smarty->assign("first_entry", true, true);
+				else
+					$smarty->assign("first_entry", null, true);
+									
+				if ($entry_cnt == $num_entries)
+					$smarty->assign("last_entry", true, true);
+				else
+					$smarty->assign("last_entry", null, true);
+
+				// get the current user index
+				$user_index = ($i * $tspf_cols) + $j;
+				
+				// If we are done processing users then break
+				if($user_index >= $user_count)
+					break;
+				// If we are on the last row display the ending tr tag
+				elseif ($user_index == ($user_count - 1))
+					$end_row = true;
+					
+				$user = $users[$user_index]; // current user
+				$curauth = get_userdata($user->ID); //user data
+				
+				$name = "";
+				if ($shownames == 'Y')
+					$name = $curauth->display_name;
+					
+				$gravatar_type = get_option('wpu_gravatar_type');
+				$display_gravatar = get_avatar($curauth->user_email, $widththumb, $gravatar_type, $name); //get avatar
+
+				$smarty->assign("start_row", $start_row, true);
+				$smarty->assign("end_row", $end_row, true);
+				$smarty->assign("total_users", $num_entries, true);
+				$smarty->assign("display_gravatar", $display_gravatar, true);
+				
+				$return_HTML .= $smarty->fetch('facepile.tpl');
+				
+				$start_row = false;
+
+			}//endfor
+		}//endfor
+
 	}// end if
+	
+	if ($echo)
+		echo $return_HTML;
+	else
+		return $return_HTML;
 }
 
 //--------------------------------------------------------
@@ -196,13 +233,13 @@ class TSP_Facepile_Widget extends WP_Widget
         
         $arguments = array(
             'title' 		=> $instance['title'],
-            'shownames' 		=> $instance['shownames'],
+            'shownames' 	=> $instance['shownames'],
             'tspf_rows' 	=> $instance['tspf_rows'],
             'tspf_cols' 	=> $instance['tspf_cols'],
             'widththumb' 	=> $instance['widththumb'],
             'heightthumb'	=> $instance['heightthumb'],
-            'beforetitle' 	=> $beforetitle,
-            'aftertitle' 	=> $aftertitle
+            'beforetitle' 	=> $instance['beforetitle'],
+            'aftertitle' 	=> $instance['aftertitle']
         );
         
         // Display the widget
@@ -217,6 +254,7 @@ class TSP_Facepile_Widget extends WP_Widget
     function update($new_instance, $old_instance)
     {
         $instance = $old_instance;
+        
         // Update the widget data
         $instance['title']         = strip_tags($new_instance['title']);
         $instance['shownames']     = $new_instance['shownames'];
@@ -224,8 +262,9 @@ class TSP_Facepile_Widget extends WP_Widget
         $instance['tspf_cols']     = $new_instance['tspf_cols'];
         $instance['widththumb']    = $new_instance['widththumb'];
         $instance['heightthumb']   = $new_instance['heightthumb'];
-        $instance['beforetitle']   = $new_instance['beforetitle'];
-        $instance['aftertitle']    = $new_instance['aftertitle'];
+        $instance['beforetitle']   = htmlentities($new_instance['beforetitle']);
+        $instance['aftertitle']    = htmlentities($new_instance['aftertitle']);
+        
         return $instance;
     }
     

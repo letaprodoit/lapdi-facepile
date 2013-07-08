@@ -8,7 +8,7 @@ $TSPF_DEFAULTS = array(
         'tspf_cols'     => 4,
         'widththumb'    => 80,
         'heightthumb'   => 80,
-        'beforetitle'   => '<h3>',
+        'beforetitle'   => '<h3 class="widget-title">',
         'aftertitle'    =>  '</h3>');
 
 // These fields for the settings block which is located at the admin setting TSP Featured Posts page
