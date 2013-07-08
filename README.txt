@@ -44,4 +44,3 @@ In CSS the attribute to add settings for is `tspf_wp_user_table_cell`. Sample se
 
 
 == Upgrade notice ==
-s
