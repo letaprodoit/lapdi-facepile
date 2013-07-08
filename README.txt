@@ -34,6 +34,11 @@ In CSS the attribute to add settings for is `tspf_wp_user_table_cell`. Sample se
 	padding: 10px;
 }`
 
+= I've installed the plugin but no faces are displaying? =
+
+1. Make sure the folder `/wp-content/plugins/tsp_facepile/templates/` has recursive, 777 permissions
+2. Make sure you have at least one non-admin user in your database
+
 == Screenshots ==
 
 1. http://www.thesoftwarepeople.com/plugins/wordpress/admin-area-tspf.jpg
