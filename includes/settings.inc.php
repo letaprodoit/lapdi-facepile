@@ -1,26 +1,26 @@
 <?php
 
 // Default settings at install
-$TSPF_DEFAULTS = array(
+$TSPFCP_DEFAULTS = array(
         'title'         => 'TSP Facepile',
         'shownames'   	=> 'Y',
-        'tspf_rows'   	=> 4,
-        'tspf_cols'     => 4,
+        'tspfcp_rows'   	=> 4,
+        'tspfcp_cols'     => 4,
         'widththumb'    => 80,
         'heightthumb'   => 80,
-        'beforetitle'   => '<h3 class="widget-title">',
+        'beforetitle'   => '<h3>',
         'aftertitle'    =>  '</h3>');
 
 // These fields for the settings block which is located at the admin setting TSP Featured Posts page
-$TSPF_ADMIN_FIELDS = array (
-		array( 'title', 'TEXT', __( 'Title', 'tsp_facepile' ), __( 'Title', 'tsp_facepile' ) ),
-		array( 'shownames', 'SELECT', __( 'Display user names?', 'tsp_facepile' ), __( 'Display user names?', 'tsp_facepile' ) ),
-		array( 'tspf_rows', 'TEXT', __( 'Number of Rows', 'tsp_facepile' ), __( 'Number of Rows', 'tsp_facepile' ) ),
-		array( 'tspf_cols', 'TEXT', __( 'Number of Columns', 'tsp_facepile' ), __( 'Number of Columns', 'tsp_facepile' ) ),
-		array( 'widththumb','TEXT',  __( 'Thumbnail Width', 'tsp_facepile' ), __( 'Thumbnail Width', 'tsp_facepile' ) ),
-		array( 'heightthumb','TEXT',  __( 'Thumbnail Height', 'tsp_facepile' ), __( 'Thumbnail Height', 'tsp_facepile' ) ),
-		array( 'beforetitle','TEXT',  __( 'HTML Before Title', 'tsp_facepile' ), __( 'HTML Before Title', 'tsp_facepile' ) ),
-		array( 'aftertitle','TEXT',  __( 'HTML After Title', 'tsp_facepile' ), __( 'HTML After Title', 'tsp_facepile') ),
+$TSPFCP_ADMIN_FIELDS = array (
+		array( 'title', 'TEXT', __( 'Title', 'tsp-facepile' ), __( 'Title', 'tsp-facepile' ) ),
+		array( 'shownames', 'SELECT', __( 'Display user names?', 'tsp-facepile' ), __( 'Display user names?', 'tsp-facepile' ) ),
+		array( 'tspfcp_rows', 'TEXT', __( 'Number of Rows', 'tsp-facepile' ), __( 'Number of Rows', 'tsp-facepile' ) ),
+		array( 'tspfcp_cols', 'TEXT', __( 'Number of Columns', 'tsp-facepile' ), __( 'Number of Columns', 'tsp-facepile' ) ),
+		array( 'widththumb','TEXT',  __( 'Thumbnail Width', 'tsp-facepile' ), __( 'Thumbnail Width', 'tsp-facepile' ) ),
+		array( 'heightthumb','TEXT',  __( 'Thumbnail Height', 'tsp-facepile' ), __( 'Thumbnail Height', 'tsp-facepile' ) ),
+		array( 'beforetitle','TEXT',  __( 'HTML Before Title', 'tsp-facepile' ), __( 'HTML Before Title', 'tsp-facepile' ) ),
+		array( 'aftertitle','TEXT',  __( 'HTML After Title', 'tsp-facepile' ), __( 'HTML After Title', 'tsp-facepile') ),
 );
 
 
@@ -36,10 +36,10 @@ if (! function_exists('fn_tsp_plugins_add_menu_render') ){
 		$array_recomend = array();
 		$count_activate = $count_install = $count_recomend = 0;
 		$array_plugins	= array(
-			array( 'tsp_featured_categories\/tsp_featured_categories.php', 'Featured Categories', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/featured-categories-for-wordpress.html', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/featured-categories-for-wordpress.html', '/wp-admin/plugin-install.php?tab=search&type=term&s=TSP+Featured+Categories&plugin-search-input=Search+Plugins', 'admin.php?page=tsp_featured_categories.php' ), 
-			array( 'tsp_featured_posts\/tsp_featured_posts.php', 'Featured Posts', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/featured-posts-for-wordpress.html', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/featured-posts-for-wordpress.html', '/wp-admin/plugin-install.php?tab=search&type=term&s=TSP+Featured+Posts&plugin-search-input=Search+Plugins', 'admin.php?page=tsp_featured_posts.php' ), 
-			array( 'tsp_facepile\/tsp_facepile.php', 'Facepile', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/facepile-for-wordpress.html', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/facepile-for-wordpress.html', '/wp-admin/plugin-install.php?tab=search&type=term&s=TSP+Facepile&plugin-search-input=Search+Plugins', 'admin.php?page=tsp_facepile.php' ), 
-			array( 'tsp_disable_autosave\/tsp_disable_autosave.php', 'Disable Auto-Save', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/disable-autosave-for-wordpress.html', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/disable-autosave-for-wordpress.html', '/wp-admin/plugin-install.php?tab=search&type=term&s=TSP+Disable+Autosave&plugin-search-input=Search+Plugins', '#' ), 
+			array( 'tsp-featured-categories\/tsp-featured-categories.php', 'Featured Categories', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/featured-categories-for-wordpress.html', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/featured-categories-for-wordpress.html', '/wp-admin/plugin-install.php?tab=search&type=term&s=TSP+Featured+Categories&plugin-search-input=Search+Plugins', 'admin.php?page=tsp-featured-categories.php' ), 
+			array( 'tsp-featured-posts\/tsp-featured-posts.php', 'Featured Posts', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/featured-posts-for-wordpress.html', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/featured-posts-for-wordpress.html', '/wp-admin/plugin-install.php?tab=search&type=term&s=TSP+Featured+Posts&plugin-search-input=Search+Plugins', 'admin.php?page=tsp-featured-posts.php' ), 
+			array( 'tsp-facepile\/tsp-facepile.php', 'Facepile', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/facepile-for-wordpress.html', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/facepile-for-wordpress.html', '/wp-admin/plugin-install.php?tab=search&type=term&s=TSP+Facepile&plugin-search-input=Search+Plugins', 'admin.php?page=tsp-facepile.php' ), 
+			array( 'tsp-disable-auto-save\/tsp-disable-auto-save.php', 'Disable Auto-Save', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/disable-autosave-for-wordpress.html', 'http://www.thesoftwarepeople.com/software/plugins/wordpress/disable-autosave-for-wordpress.html', '/wp-admin/plugin-install.php?tab=search&type=term&s=TSP+Disable+Auto+Save&plugin-search-input=Search+Plugins', '#' ), 
 		);
 		foreach ( $array_plugins as $plugins ) {
 			if( 0 < count( preg_grep( "/".$plugins[0]."/", $active_plugins ) ) ) {
@@ -147,168 +147,199 @@ if (! function_exists('fn_tsp_plugins_add_menu_render') ){
 }
 
 // Function for display captcha settings page in the admin area
-function fn_tsp_facepile_settings_page() {
-	global $TSPF_ADMIN_FIELDS;
-	global $TSPF_OPTIONS;
+function fn_tspfcp_settings_page() {
+	global $TSPFCP_ADMIN_FIELDS;
+	global $TSPFCP_OPTIONS;
 
 	$error = "";
 	
 	// Save data for settings page
-	if( isset( $_REQUEST['tspf_form_submit'] ) && check_admin_referer( plugin_basename(__FILE__), 'tspf_nonce_name' ) ) {
-		$tspf_request_options = array();
+	if( isset( $_REQUEST['tspfcp_form_submit'] ) && check_admin_referer( plugin_basename(__FILE__), 'tspfcp_nonce_name' ) ) {
+		$tspfcp_request_options = array();
 		
-		foreach( $TSPF_OPTIONS as $key => $val ) 
+		foreach( $TSPFCP_OPTIONS as $key => $val ) 
 		{
-			$tspf_request_options[$key] = $_REQUEST[$key];
+			$tspfcp_request_options[$key] = $_REQUEST[$key];
 		}
 		
 		// array merge incase this version has added new options
-		$TSPF_OPTIONS = array_merge( $TSPF_OPTIONS , $tspf_request_options );
+		$TSPFCP_OPTIONS = array_merge( $TSPFCP_OPTIONS , $tspfcp_request_options );
 
-		update_option( 'tsp_facepile_options', $TSPF_OPTIONS );
-		$message = __( "Options saved.", 'tsp_facepile' );
+		update_option( 'tspfcp_options', $TSPFCP_OPTIONS );
+		$message = __( "Options saved.", 'tsp-facepile' );
 	}
 
 	// Display form on the setting page
 ?>
 <div class="tsp_container">
 	<div class="icon32 tsp_icon" id="tsp_icon-options-general"></div>
-	<h2><?php _e('Facepile Shortcode Settings (The Software People)', 'tsp_facepile' ); ?></h2>
-	<div class="row">
-		<div class="4u">
-			<div class="updated fade" <?php if( ! isset( $_REQUEST['tspf_form_submit'] ) || $error != "" ) echo "style=\"display:none\""; ?>><p><strong><?php echo $message; ?></strong></p></div>
-			<div class="error" <?php if( "" == $error ) echo "style=\"display:none\""; ?>><p><strong><?php echo $error; ?></strong></p></div>
-			<form method="post" action="admin.php?page=tsp_facepile.php">
-				<fieldset>
-				<?php foreach ($TSPF_ADMIN_FIELDS as $fields): ?>
-					<div class="tsp_form_element" id="<?php echo $fields[0]; ?>_container_div" style="">
-						<label for="<?php echo $fields[0]; ?>"><?php echo __( $fields[2], 'tsp_facepile' ); ?></label>
-						
-						<?php if ($fields[1] == 'TEXT'): ?>
-						   <input id="<?php echo $fields[0]; ?>" name="<?php echo $fields[0]; ?>" value="<?php echo $TSPF_OPTIONS[$fields[0]]; ?>" />
-						<?php elseif ($fields[1] == 'SELECT'): ?>
-							<?php if ($fields[0] == 'shownames'): ?>
-							   <select name="<?php echo $fields[0]; ?>" id="<?php echo $fields[0]; ?>" >
-							      <option class="level-0" value="Y" <?php
-							        if ($TSPFP_OPTIONS[$fields[0]] == "Y") echo " selected='selected'" ?>><?php
-							        _e('Yes', 'tsp_featured_posts') ?></option>
-							      <option class="level-0" value="N" <?php
-							        if ($TSPFP_OPTIONS[$fields[0]] == "N") echo " selected='selected'" ?>><?php
-							        _e('No', 'tsp_featured_posts') ?></option>
-							   </select>
-							<?php endif; ?>
-						<?php endif; ?>
-						
-						<div class="clear"></div>
-						<div id="error-message-name"></div>
-					</div>
-				<?php endforeach; ?>
-				</fieldset>
-				<input type="hidden" name="tspf_form_submit" value="submit" />
-				<p class="submit">
-					<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
-				</p>
-				<?php wp_nonce_field( plugin_basename(__FILE__), 'tspf_nonce_name' ); ?>
-			</form>
-		</div><!-- 4u -->
-		<div class="8u">
-			<div class="mycomment">
-				<p><h3>Using Facepile Shortcode <a href="#" class="toggle">(hide/show details)</a>:</h3></p>
-				<div class="note-details">
-					<ul style="list-style-type:square;">
-						<li>Changing the default post options below allows you to place <strong>[tsp_facepile]</strong> shortcode tag into any post or page with these options.</li>
-						<li>However, if you wish to add different options to the <strong>[tsp_facepile]</strong> shortcode please use the following settings:
-							<ul style="padding-left: 30px;">
-								<li>Title: <strong>title="Title of Posts"</strong></li>
-								<li>Show Names: <strong>shownames="Y"</strong>(Options: Y, N)</li>
-								<li>Number of Rows: <strong>tspf_rows="4"</strong></li>
-								<li>Number of Columns: <strong>tspf_cols="4"</strong></li>
-								<li>Thumbnail Width: <strong>widththumb="80"</strong></li>
-								<li>Thumbnail Height: <strong>heightthumb="80"</strong></li>
-								<li>HTML Tag Before Title: <strong>beforetitle="&lt;h3&gt;"</strong></li>
-								<li>HTML Tag After Title: <strong>aftertitle="&lt;/h3&gt;"</strong></li>
-							</ul>
-						</li>
-						<li>Insert your desired shortcode into any page or post.</li>
+	<h2><?php _e('Facepile Shortcode Settings (The Software People)', 'tsp-facepile' ); ?></h2>
+	<div class="mycomment">
+		<p><h3>Using Facepile Shortcode <a href="#" class="toggle">(hide/show details)</a>:</h3></p>
+		<div class="note-details">
+			<ul style="list-style-type:square;">
+				<li>Changing the default post options below allows you to place <strong>[tsp-facepile]</strong> shortcode tag into any post or page with these options.</li>
+				<li>However, if you wish to add different options to the <strong>[tsp-facepile]</strong> shortcode please use the following settings:
+					<ul style="padding-left: 30px;">
+						<li>Title: <strong>title="Title of Posts"</strong></li>
+						<li>Show Names: <strong>shownames="Y"</strong>(Options: Y, N)</li>
+						<li>Number of Rows: <strong>tspfcp_rows="4"</strong></li>
+						<li>Number of Columns: <strong>tspfcp_cols="4"</strong></li>
+						<li>Thumbnail Width: <strong>widththumb="80"</strong></li>
+						<li>Thumbnail Height: <strong>heightthumb="80"</strong></li>
+						<li>HTML Tag Before Title: <strong>beforetitle="&lt;h3&gt;"</strong></li>
+						<li>HTML Tag After Title: <strong>aftertitle="&lt;/h3&gt;"</strong></li>
 					</ul>
-					<hr>
-					A shortcode with all the options will look like the following:<br><br>
-					<strong>[tsp_facepile title="Facepile" shownames="Y" tspf_rows="4" tspf_cols="4" widththumb="80" heightthumb="80" beforetitle="" aftertitle=""]</strong>
-				</div>
-			
+				</li>
+				<li>Insert your desired shortcode into any page or post.</li>
+			</ul>
+			<hr>
+			A shortcode with all the options will look like the following:<br><br>
+			<strong>[tsp-facepile title="Facepile" shownames="Y" tspfcp_rows="4" tspfcp_cols="4" widththumb="80" heightthumb="80" beforetitle="" aftertitle=""]</strong>
+		</div>
+	
+	</div>
+	<script>
+		jQuery("div.tsp_container a.toggle").click(function () {
+			jQuery(".note-details").toggle();
+		});
+	</script>
+	<div class="updated fade" <?php if( ! isset( $_REQUEST['tspfcp_form_submit'] ) || $error != "" ) echo "style=\"display:none\""; ?>><p><strong><?php echo $message; ?></strong></p></div>
+	<div class="error" <?php if( "" == $error ) echo "style=\"display:none\""; ?>><p><strong><?php echo $error; ?></strong></p></div>
+	<form method="post" action="admin.php?page=tsp-facepile.php">
+		<fieldset>
+		<?php foreach ($TSPFCP_ADMIN_FIELDS as $fields): ?>
+			<div class="tsp_form_element" id="<?php echo $fields[0]; ?>_container_div" style="">
+				<label for="<?php echo $fields[0]; ?>"><?php echo __( $fields[2], 'tsp-facepile' ); ?></label>
+				
+				<?php if ($fields[1] == 'TEXT'): ?>
+				   <input id="<?php echo $fields[0]; ?>" name="<?php echo $fields[0]; ?>" value="<?php echo $TSPFCP_OPTIONS[$fields[0]]; ?>" />
+				<?php elseif ($fields[1] == 'SELECT'): ?>
+					<?php if ($fields[0] == 'shownames'): ?>
+					   <select name="<?php echo $fields[0]; ?>" id="<?php echo $fields[0]; ?>" >
+					      <option class="level-0" value="Y" <?php
+					        if ($TSPFP_OPTIONS[$fields[0]] == "Y") echo " selected='selected'" ?>><?php
+					        _e('Yes', 'tsp-featured-posts') ?></option>
+					      <option class="level-0" value="N" <?php
+					        if ($TSPFP_OPTIONS[$fields[0]] == "N") echo " selected='selected'" ?>><?php
+					        _e('No', 'tsp-featured-posts') ?></option>
+					   </select>
+					<?php endif; ?>
+				<?php endif; ?>
+				
+				<div class="clear"></div>
+				<div id="error-message-name"></div>
 			</div>
-			<script>
-				jQuery("div.tsp_container a.toggle").click(function () {
-					jQuery(".note-details").toggle();
-				});
-			</script>
-		</div><!-- 8u -->
-	</div><!-- row -->
+		<?php endforeach; ?>
+		</fieldset>
+		<input type="hidden" name="tspfcp_form_submit" value="submit" />
+		<p class="submit">
+			<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
+		</p>
+		<?php wp_nonce_field( plugin_basename(__FILE__), 'tspfcp_nonce_name' ); ?>
+	</form>
 </div><!-- tsp_container -->
 <?php } 
 
 // register settings function
-function fn_tsp_facepile_register_settings() {
+function fn_tspfcp_register_settings() {
 
-	global $TSPF_DEFAULTS,$TSPF_OPTIONS;
+	global $TSPFCP_DEFAULTS,$TSPFCP_OPTIONS;
 			
 	// install the option defaults
-	if( !get_option( 'tsp_facepile_options' ) ) 
+	if( !get_option( 'tspfcp_options' ) ) 
 	{
-		add_option( 'tsp_facepile_options', $TSPF_DEFAULTS, '', 'yes' );
+		add_option( 'tspfcp_options', $TSPFCP_DEFAULTS, '', 'yes' );
 	}
 
-	$TSPF_OPTIONS = get_option( 'tsp_facepile_options' );// get options from the database
+	$TSPFCP_OPTIONS = get_option( 'tspfcp_options' );// get options from the database
 	
 	// array merge incase this version has added new options
 	
-	if (empty($TSPF_OPTIONS))
+	if (empty($TSPFCP_OPTIONS))
 	{
-		$TSPF_OPTIONS = $TSPF_DEFAULTS;
+		$TSPFCP_OPTIONS = $TSPFCP_DEFAULTS;
 	}
 	else
 	{
-		$TSPF_OPTIONS = array_merge($TSPF_DEFAULTS, $TSPF_OPTIONS);
+		$TSPFCP_OPTIONS = array_merge($TSPFCP_DEFAULTS, $TSPFCP_OPTIONS);
 	}//endelse
 }
 
-function fn_tsp_facepile_add_admin_menu() 
+function fn_tspfcp_add_admin_menu() 
 {
-	add_menu_page( 'TSP Plugins', 'TSP Plugins', 'manage_options', 'tsp_plugins', 'fn_tsp_plugins_add_menu_render', WP_CONTENT_URL."/plugins/tsp_facepile/images/tsp_icon_16.png", 2617638); 
-	add_submenu_page('tsp_plugins', __( 'Facepile', 'tsp_facepile' ), __( 'Facepile', 'tsp_facepile' ), 'manage_options', "tsp_facepile.php", 'fn_tsp_facepile_settings_page');
+	add_menu_page( 'TSP Plugins', 'TSP Plugins', 'manage_options', 'tsp_plugins', 'fn_tsp_plugins_add_menu_render', WP_CONTENT_URL."/plugins/tsp-facepile/images/tsp_icon_16.png", 2617638); 
+	add_submenu_page('tsp_plugins', __( 'Facepile', 'tsp-facepile' ), __( 'Facepile', 'tsp-facepile' ), 'manage_options', "tsp-facepile.php", 'fn_tspfcp_settings_page');
 
 	//call register settings function
-	add_action( 'admin_init', 'fn_tsp_facepile_register_settings' );
+	add_action( 'admin_init', 'fn_tspfcp_register_settings' );
 }
 
-function fn_tsp_facepile_plugin_init() 
+function fn_tspfcp_plugin_init() 
 {
+	global $wp_version;
+	
+	if (version_compare($wp_version, TSPFCP_REQUIRED_WP_VERSION, "<"))
+	{
+		wp_die("<pre>TSP Facepile Plugin requires WordPress version <strong>" . TSPFCP_REQUIRED_WP_VERSION . " or higher</<strong>.<br>You have version <strong>$wp_version</strong> installed.</pre>");
+	}//endif
+	
+	if( is_plugin_active('tsp_facepile/tsp_facepile.php') ) 
+	{
+		deactivate_plugins( 'tsp_facepile/tsp_facepile.php' );
+	}//endif
 }
 
-function fn_tsp_facepile_delete_options() {
-	delete_option( 'tsp_facepile_options' );
+function fn_tspfcp_delete_options() {
 }
 
-function fn_tsp_facepile_admin_head() 
+function fn_tspfcp_admin_head() 
 {
-	wp_register_script( 'tspf_skel_min', plugins_url( 'js/skel.min.js', __FILE__ ) );
-	wp_enqueue_script( 'tspf_skel_min' );
+	wp_register_script( 'tspfcp_skel_min', plugins_url( 'js/skel.min.js', __FILE__ ) );
+	wp_enqueue_script( 'tspfcp_skel_min' );
 
-	wp_register_style( 'tspf_admin_stylesheet', plugins_url( 'css/style.css', __FILE__ ) );
-	wp_enqueue_style( 'tspf_admin_stylesheet' );
+	wp_register_style( 'tspfcp-admin_stylesheet', plugins_url( 'css/style.css', __FILE__ ) );
+	wp_enqueue_style( 'tspfcp-admin_stylesheet' );
 }
 
+/*
+function fn_tspfcp_plugin_action_links( $links, $file ) 
+{
+	//Static so we don't call plugin_basename on every plugin row.
+	static $this_plugin;
+	if ( ! $this_plugin ) $this_plugin = plugin_basename(__FILE__);
 
+	if ( $file == $this_plugin ){
+			 $settings_link = '<a href="admin.php?page=tsp-facepile.php">' . __( 'Settings', 'tsp-facepile' ) . '</a>';
+			 array_unshift( $links, $settings_link );
+	}
+	return $links;
+} // end function fn_tspfcp_plugin_action_links
+
+// adds "Settings" link to the plugin action page
+add_filter( 'plugin_action_links', 'fn_tspfcp_plugin_action_links', 10, 2 );
+
+function fn_tspfcp_register_plugin_links($links, $file) 
+{
+	$base = plugin_basename(__FILE__);
+	if ($file == $base) {
+		$links[] = '<a href="admin.php?page=tsp-facepile.php">' . __( 'Settings', 'tsp-facepile' ) . '</a>';
+		$links[] = '<a href="http://wordpress.org/extend/plugins/tsp-facepile/faq/" target="_blank">' . __( 'FAQ', 'tsp-facepile' ) . '</a>';
+		$links[] = '<a href="http://lab.thesoftwarepeople.com/tracker/wordpress-fcp" target="_blank">' . __( 'Support', 'tsp-facepile' ) . '</a>';
+	}
+	return $links;
+} // end function fn_tspfcp_register_plugin_links
+
+//Additional links on the plugin page
+add_filter( 'plugin_row_meta', 'fn_tspfcp_register_plugin_links', 10, 2 );
+*/
 
 // Add global setting for Captcha
-$TSPF_OPTIONS = get_option( 'tsp_facepile_options' );// get the options from the database
+$TSPFCP_OPTIONS = get_option( 'tspfcp_options' );// get the options from the database
 
-add_action( 'init', 'fn_tsp_facepile_plugin_init' );
-add_action( 'admin_init', 'fn_tsp_facepile_plugin_init' );
-add_action( 'admin_menu', 'fn_tsp_facepile_add_admin_menu' );
-add_action( 'admin_enqueue_scripts', 'fn_tsp_facepile_admin_head' );
-
-register_uninstall_hook( __FILE__, 'fn_tsp_facepile_delete_options' );
-
+add_action( 'init', 'fn_tspfcp_plugin_init' );
+add_action( 'admin_init', 'fn_tspfcp_plugin_init' );
+add_action( 'admin_menu', 'fn_tspfcp_add_admin_menu' );
+add_action( 'admin_enqueue_scripts', 'fn_tspfcp_admin_head' );
 
 ?>

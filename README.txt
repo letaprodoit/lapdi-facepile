@@ -1,9 +1,9 @@
 === TSP Facepile ===
-Contributors: sharrondenice
+Contributors: thesoftwarepeople,sharrondenice
 Donate link: http://www.thesoftwarepeople.com/software/plugins/wordpress/facepile-for-wordpress.html
 Tags: display faces tiles members list grid the software people
-Requires at least: 3.3
-Tested up to: 3.5.1
+Requires at least: 3.5.1
+Tested up to: 3.5.2
 Stable tag: trunk
 License: Apache v2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0
@@ -12,11 +12,18 @@ Facepile allows you to add wordpress users photo icons to your blog's website in
 
 == Description ==
 
-Facepile allows you to add wordpress users photo icons to your blog's website in grid format.
+The Software People's (TSP) Facepile plugin allows you to add wordpress users photo icons to your blog's website in grid format.
+
+= Shortcodes =
+
+Add a `Facepile` to posts and pages by using a shortcode inside your text or evaluated from within your theme. You may override page/post `Facepile` options with shortcode attributes defined on the plugin's settings page.
+
+* `[tsp-facepile]` - Will display a facepile with the default options defined in the plugin's settings page.
+* `[tsp-facepile title="Facepile" shownames="Y" tspfcp_rows="4" tspfcp_cols="4" widththumb="80" heightthumb="80" beforetitle="" aftertitle=""]` - Will override all attributes defined on the plugin's settings page.
 
 == Installation ==
 
-1. Upload `tsp_facepile` to the `/wp-content/plugins/` directory
+1. Upload `tsp-facepile` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. After installation, refer to the `TSP Facepile` settings page for more detailed instructions on setting up your shortcodes.
 4. Facepile widgets can be added to the sidemenu bar by visiting `Appearance > Widgets` and dragging the `TSP Facepile` widget to your sidebar menu.
@@ -28,21 +35,22 @@ Facepile allows you to add wordpress users photo icons to your blog's website in
 
 = How do I add spaces between the face icons? =
 
-In CSS the attribute to add settings for is `tspf_wp_user_table_cell`. Sample settings may appear as follows:
+In CSS the attribute to add settings for is `tspfcp_wp_user_table_cell`. Sample settings may appear as follows:
 
-`.tspf_wp_user_table_cell{
+`.tspfcp_wp_user_table_cell{
 	padding: 10px;
 }`
 
 = I've installed the plugin but no faces are displaying? =
 
-1. Make sure the folder `/wp-content/plugins/tsp_facepile/templates/` has recursive, 777 permissions
+1. Make sure the folder `/wp-content/uploads/` has recursive, 777 permissions
 2. Make sure you have at least one non-admin user in your database
 
 == Screenshots ==
 
-1. http://www.thesoftwarepeople.com/plugins/wordpress/admin-area-tspf.jpg
-2. http://www.thesoftwarepeople.com/plugins/wordpress/front-area-tspf.jpg
+1. Admin area widget settings.
+2. Facepile displayed on the front-end.
+3. Admin area shortcode settings area.
 
 == Changelog ==
 

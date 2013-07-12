@@ -10,6 +10,11 @@ Copyright: 		Copyright © 2013 The Software People, LLC (www.thesoftwarepeople.c
 License: 		APACHE v2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 */
 
+define( 'TSPFCP_REQUIRED_WP_VERSION', '3.5.1' );
+define( 'TSPFCP_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+
+require_once(ABSPATH . 'wp-admin/includes/plugin.php' );
+
 // Get the plugin path
 if (!defined('WP_CONTENT_DIR')) define('WP_CONTENT_DIR', ABSPATH . 'wp-content');
 if (!defined('DIRECTORY_SEPARATOR')) {
@@ -19,79 +24,122 @@ if (!defined('DIRECTORY_SEPARATOR')) {
 
 // Set the abs plugin path
 define('PLUGIN_ABS_PATH', ABSPATH . PLUGINDIR );
-$plugin_abs_path = ABSPATH . PLUGINDIR . DIRECTORY_SEPARATOR . "tsp_facepile";
-define('TSPF_ABS_PATH', $plugin_abs_path);
+$plugin_abs_path = PLUGIN_ABS_PATH . DIRECTORY_SEPARATOR . "tsp-facepile";
+define('TSPFCP_ABS_PATH', $plugin_abs_path);
 $plugin_url = WP_CONTENT_URL . '/plugins/' . plugin_basename(dirname(__FILE__)) . '/';
-define('TSPF_URL_PATH', $plugin_url);
+define('TSPFCP_URL_PATH', $plugin_url);
 
-define('TSPF_TEMPLATE_PATH', TSPF_ABS_PATH . '/templates');
+$upload_dir = wp_upload_dir();
+
+define('TSPFCP_TEMPLATE_PATH', TSPFCP_ABS_PATH . '/templates');
+define('TSPFCP_TEMPLATE_CACHE_PATH', $upload_dir['basedir'] . '/tsp-plugins/tsp-facepile/cache');
+define('TSPFCP_TEMPLATE_COMPILE_PATH', $upload_dir['basedir'] . '/tsp-plugins/tsp-facepile/compiled');
 
 // Set the file path
 $file_path    = $plugin_abs_path . DIRECTORY_SEPARATOR . basename(__FILE__);
 
 // Set the absolute path
 $asolute_path = dirname(__FILE__) . DIRECTORY_SEPARATOR;
-define('TSPF_ABSPATH', $asolute_path);
+define('TSPFCP_ABSPATH', $asolute_path);
 
-include_once(TSPF_ABS_PATH . '/includes/settings.inc.php');
 
+include_once(TSPFCP_ABS_PATH . '/includes/settings.inc.php');
+
+
+if (!class_exists('Smarty'))
+{
+    if (file_exists(TSPFCP_ABS_PATH . '/libs/Smarty.class.php'))
+        require_once TSPFCP_ABS_PATH . '/libs/Smarty.class.php';
+}
+
+register_activation_hook( __FILE__, 'fn_tspfcp_install' );
+register_uninstall_hook( __FILE__, 'fn_tspfcp_uninstall' );
+//--------------------------------------------------------
+// install plugin
+//--------------------------------------------------------
+function fn_tspfcp_install()
+{
+	$message = "";
+	
+	if (!wp_mkdir_p( TSPFCP_TEMPLATE_CACHE_PATH ))
+		$message .= "<br>Unable to create " . TSPFCP_TEMPLATE_CACHE_PATH . " directory. Please create this directory manually via FTP or cPanel.";
+	else
+		@chmod( TSPFCP_TEMPLATE_CACHE_PATH, 0777 );
+	
+	
+	if (!wp_mkdir_p( TSPFCP_TEMPLATE_COMPILE_PATH ))
+		$message .= "<br>Unable to create " . TSPFCP_TEMPLATE_COMPILE_PATH . " directory. Please create this directory manually via FTP or cPanel.";
+	else
+		@chmod( TSPFCP_TEMPLATE_COMPILE_PATH, 0777 );
+	
+	return $message;
+}
+//--------------------------------------------------------
+// uninstall plugin
+//--------------------------------------------------------
+function fn_tspfcp_uninstall()
+{
+	delete_option( 'tspfcp_options' );
+}
 //--------------------------------------------------------
 // Process shortcodes
 //--------------------------------------------------------
-function fn_tsp_facepile_process_shortcodes($att)
+function fn_tspfcp_process_shortcodes($att)
 {
-	global $TSPF_OPTIONS;
+	global $TSPFCP_OPTIONS;
 	
 	if ( is_feed() )
-		return '[tsp_facepile]';
+		return '[tsp-facepile]';
 
-	$options = $TSPF_OPTIONS;
+	$options = $TSPFCP_OPTIONS;
 	
 	if (!empty($att))
-		$options = array_merge( $TSPF_OPTIONS, $att );
+		$options = array_merge( $TSPFCP_OPTIONS, $att );
 		     	
-	$output = fn_tsp_facepile_display($options,false);
+	$output = fn_tspfcp_display($options,false);
 	
 	return $output;
 }
 
-add_shortcode('tsp_facepile', 'fn_tsp_facepile_process_shortcodes');
+add_shortcode('tsp-facepile', 'fn_tspfcp_process_shortcodes');
+add_shortcode('tsp_facepile', 'fn_tspfcp_process_shortcodes');
 
 //--------------------------------------------------------
 // Queue the stylesheet
 //--------------------------------------------------------
-function fn_tsp_facepile_enqueue_styles()
+function fn_tspfcp_enqueue_styles()
 {
-    wp_enqueue_style('tsp_facepile.css', TSPF_URL_PATH . 'tsp_facepile.css');
+	wp_register_style( 'tspfcp-stylesheet', plugins_url( 'tsp-facepile.css', __FILE__ ) );
+	wp_enqueue_style( 'tspfcp-stylesheet' );
 }
 
-add_action('wp_print_styles', 'fn_tsp_facepile_enqueue_styles');
+add_action('wp_print_styles', 'fn_tspfcp_enqueue_styles');
 //--------------------------------------------------------
 
 //--------------------------------------------------------
 // Show simple featured links
 //--------------------------------------------------------
-function fn_tsp_facepile_display ($args = null, $echo = true)
+function fn_tspfcp_display ($args = null, $echo = true)
 {
-    global $TSPF_OPTIONS;
+    global $TSPFCP_OPTIONS;
 
 	$smarty = new Smarty;
-	$smarty->setTemplateDir(TSPF_TEMPLATE_PATH);
-	$smarty->setCompileDir(TSPF_TEMPLATE_PATH.'/compiled/');
-	$smarty->setCacheDir(TSPF_TEMPLATE_PATH.'/cache/');
+	$smarty->setTemplateDir(TSPFCP_TEMPLATE_PATH);
+	$smarty->setCompileDir(TSPFCP_TEMPLATE_CACHE_PATH);
+	$smarty->setCacheDir(TSPFCP_TEMPLATE_COMPILE_PATH);
 
 	$return_HTML = "";
 
-	$fp = $TSPF_OPTIONS;
+	$fp = $TSPFCP_OPTIONS;
 	
 	if (!empty($args))
-		$fp = array_merge( $TSPF_OPTIONS, $args );
+		$fp = array_merge( $TSPFCP_OPTIONS, $args );
     
     // User settings
     $title        	= $fp['title'];
     $shownames     	= $fp['shownames'];
-    $tspf_rows    	= $fp['tspf_rows'];
-    $tspf_cols    	= $fp['tspf_cols'];
+    $tspfcp_rows    = $fp['tspfcp_rows'];
+    $tspfcp_cols    = $fp['tspfcp_cols'];
     $widththumb   	= $fp['widththumb'];
     $heightthumb  	= $fp['heightthumb'];
     $beforetitle 	= html_entity_decode($fp['beforetitle']);
@@ -105,7 +153,7 @@ function fn_tsp_facepile_display ($args = null, $echo = true)
     global $wpdb;
     
     // Query all subscribers
-	$user_count = $tspf_rows * $tspf_cols;
+	$user_count = $tspfcp_rows * $tspfcp_cols;
 	
 	// Display subscribers only  
 	$total_users = $wpdb->get_var("SELECT COUNT($wpdb->users.ID) FROM $wpdb->users INNER JOIN $wpdb->usermeta ON $wpdb->users.ID = $wpdb->usermeta.user_id WHERE $wpdb->usermeta.meta_key = 'wp_user_level' AND $wpdb->usermeta.meta_value = '0'");
@@ -125,12 +173,12 @@ function fn_tsp_facepile_display ($args = null, $echo = true)
 	    }
 		
 
-       	for ($i=0; $i < $tspf_rows; $i++) 
+       	for ($i=0; $i < $tspfcp_rows; $i++) 
        	{ 
 			$start_row = true;
 			$end_row = false;
 			
-			for ($j=0; $j < $tspf_cols; $j++) 
+			for ($j=0; $j < $tspfcp_cols; $j++) 
 			{ 		        
 		        $entry_cnt++;
 		
@@ -145,7 +193,7 @@ function fn_tsp_facepile_display ($args = null, $echo = true)
 					$smarty->assign("last_entry", null, true);
 
 				// get the current user index
-				$user_index = ($i * $tspf_cols) + $j;
+				$user_index = ($i * $tspfcp_cols) + $j;
 				
 				// If we are done processing users then break
 				if($user_index >= $user_count)
@@ -166,7 +214,7 @@ function fn_tsp_facepile_display ($args = null, $echo = true)
 
 				$smarty->assign("start_row", $start_row, true);
 				$smarty->assign("end_row", $end_row, true);
-				$smarty->assign("total_users", $num_entries, true);
+				$smarty->assign("total_users", $total_users, true);
 				$smarty->assign("display_gravatar", $display_gravatar, true);
 				
 				$return_HTML .= $smarty->fetch('facepile.tpl');
@@ -191,16 +239,16 @@ function fn_tsp_facepile_display ($args = null, $echo = true)
 //--------------------------------------------------------
 // Register widget
 //--------------------------------------------------------
-function fn_tsp_facepile_widget_init()
+function fn_tspfcp_widget_init()
 {
-    register_widget('TSP_Facepile_Widget');
+    register_widget('TSPFCP_Widget');
 }
 
 // Add functions to init
-add_action('widgets_init', 'fn_tsp_facepile_widget_init');
+add_action('widgets_init', 'fn_tspfcp_widget_init');
 //--------------------------------------------------------
 
-class TSP_Facepile_Widget extends WP_Widget
+class TSPFCP_Widget extends WP_Widget
 {
     //--------------------------------------------------------
     // Constructor
@@ -209,19 +257,19 @@ class TSP_Facepile_Widget extends WP_Widget
     {
         // Get widget options
         $widget_options  = array(
-            'classname'                 => 'widget_tsp_facepile',
-            'description'               => __('This widget allows you to add in your sites users in grid format.', 'tsp_facepile')
+            'classname'                 => 'widget-tsp-facepile',
+            'description'               => __('This widget allows you to add in your sites users in grid format.', 'tsp-facepile')
         );
         
         // Get control options
         $control_options = array(
             'width' => 300,
             'height' => 350,
-            'id_base' => 'widget_tsp_facepile'
+            'id_base' => 'widget-tsp-facepile'
         );
         
         // Create the widget
-		parent::__construct('widget_tsp_facepile', __('TSP Facepile', 'tsp_facepile') , $widget_options, $control_options);
+		parent::__construct('widget-tsp-facepile', __('TSP Facepile', 'tsp-facepile') , $widget_options, $control_options);
     }
     
     //--------------------------------------------------------
@@ -234,8 +282,8 @@ class TSP_Facepile_Widget extends WP_Widget
         $arguments = array(
             'title' 		=> $instance['title'],
             'shownames' 	=> $instance['shownames'],
-            'tspf_rows' 	=> $instance['tspf_rows'],
-            'tspf_cols' 	=> $instance['tspf_cols'],
+            'tspfcp_rows' 	=> $instance['tspfcp_rows'],
+            'tspfcp_cols' 	=> $instance['tspfcp_cols'],
             'widththumb' 	=> $instance['widththumb'],
             'heightthumb'	=> $instance['heightthumb'],
             'beforetitle' 	=> $instance['beforetitle'],
@@ -244,7 +292,7 @@ class TSP_Facepile_Widget extends WP_Widget
         
         // Display the widget
         echo $before_widget;
-        fn_tsp_facepile_display($arguments);
+        fn_tspfcp_display($arguments);
         echo $after_widget;
     }
     
@@ -258,8 +306,8 @@ class TSP_Facepile_Widget extends WP_Widget
         // Update the widget data
         $instance['title']         = strip_tags($new_instance['title']);
         $instance['shownames']     = $new_instance['shownames'];
-        $instance['tspf_rows']     = $new_instance['tspf_rows'];
-        $instance['tspf_cols']     = $new_instance['tspf_cols'];
+        $instance['tspfcp_rows']   = $new_instance['tspfcp_rows'];
+        $instance['tspfcp_cols']   = $new_instance['tspfcp_cols'];
         $instance['widththumb']    = $new_instance['widththumb'];
         $instance['heightthumb']   = $new_instance['heightthumb'];
         $instance['beforetitle']   = htmlentities($new_instance['beforetitle']);
@@ -273,15 +321,15 @@ class TSP_Facepile_Widget extends WP_Widget
 	//--------------------------------------------------------
     function form($instance)
     {
-		global $TSPF_DEFAULTS;
+		global $TSPFCP_DEFAULTS;
 		        
-        $instance = wp_parse_args((array)$instance, $TSPF_DEFAULTS); ?>
+        $instance = wp_parse_args((array)$instance, $TSPFCP_DEFAULTS); ?>
       
 <!-- Display the title -->
 <p>
    <label for="<?php
         echo $this->get_field_id('title'); ?>"><?php
-        _e('Title:', 'tsp_facepile') ?></label>
+        _e('Title:', 'tsp-facepile') ?></label>
    <input id="<?php
         echo $this->get_field_id('title'); ?>" name="<?php
         echo $this->get_field_name('title'); ?>" value="<?php
@@ -293,40 +341,40 @@ class TSP_Facepile_Widget extends WP_Widget
 <p>
    <label for="<?php
         echo $this->get_field_id('shownames'); ?>"><?php
-        _e('Display user names?', 'tsp_facepile') ?></label>
+        _e('Display user names?', 'tsp-facepile') ?></label>
    <select name="<?php
         echo $this->get_field_name('shownames'); ?>" id="<?php
         echo $this->get_field_id('shownames'); ?>" >
       <option class="level-0" value="Y" <?php
         if ($instance['shownames'] == "Y") echo " selected='selected'" ?>><?php
-        _e('Yes', 'tsp_facepile') ?></option>
+        _e('Yes', 'tsp-facepile') ?></option>
       <option class="level-0" value="N" <?php
         if ($instance['shownames'] == "N") echo " selected='selected'" ?>><?php
-        _e('No', 'tsp_facepile') ?></option>
+        _e('No', 'tsp-facepile') ?></option>
    </select>
 </p>
 
-<!-- Choose the number of tspf_rows -->
+<!-- Choose the number of tspfcp_rows -->
 <p>
    <input id="<?php
-        echo $this->get_field_id('tspf_rows'); ?>" name="<?php
-        echo $this->get_field_name('tspf_rows'); ?>" value="<?php
-        echo $instance['tspf_rows']; ?>" style="width:20%;" />
+        echo $this->get_field_id('tspfcp_rows'); ?>" name="<?php
+        echo $this->get_field_name('tspfcp_rows'); ?>" value="<?php
+        echo $instance['tspfcp_rows']; ?>" style="width:20%;" />
    <label for="<?php
-        echo $this->get_field_id('tspf_rows'); ?>"><?php
-        _e('Number of Rows', 'tsp_facepile') ?></label>
+        echo $this->get_field_id('tspfcp_rows'); ?>"><?php
+        _e('Number of Rows', 'tsp-facepile') ?></label>
 </p>
 
 
-<!-- Choose the number of tspf_cols -->
+<!-- Choose the number of tspfcp_cols -->
 <p>
    <input id="<?php
-        echo $this->get_field_id('tspf_cols'); ?>" name="<?php
-        echo $this->get_field_name('tspf_cols'); ?>" value="<?php
-        echo $instance['tspf_cols']; ?>" style="width:20%;" />
+        echo $this->get_field_id('tspfcp_cols'); ?>" name="<?php
+        echo $this->get_field_name('tspfcp_cols'); ?>" value="<?php
+        echo $instance['tspfcp_cols']; ?>" style="width:20%;" />
    <label for="<?php
-        echo $this->get_field_id('tspf_cols'); ?>"><?php
-        _e('Number of Columns', 'tsp_facepile') ?></label>
+        echo $this->get_field_id('tspfcp_cols'); ?>"><?php
+        _e('Number of Columns', 'tsp-facepile') ?></label>
 </p>
 
 <!-- Choose the thumbnail width -->
@@ -337,7 +385,7 @@ class TSP_Facepile_Widget extends WP_Widget
         echo $instance['widththumb']; ?>" style="width:20%;" />
    <label for="<?php
         echo $this->get_field_id('widththumb'); ?>"><?php
-        _e('Thumbnail Width', 'tsp_facepile') ?></label>
+        _e('Thumbnail Width', 'tsp-facepile') ?></label>
 </p>
 
 <!-- Choose the thumbnail height -->
@@ -348,14 +396,14 @@ class TSP_Facepile_Widget extends WP_Widget
         echo $instance['heightthumb']; ?>" style="width:20%;" />
    <label for="<?php
         echo $this->get_field_id('heightthumb'); ?>"><?php
-        _e('Thumbnail Height', 'tsp_facepile') ?></label>
+        _e('Thumbnail Height', 'tsp-facepile') ?></label>
 </p>
 
 <!-- Before title -->
 <p>
    <label for="<?php
         echo $this->get_field_id('beforetitle'); ?>"><?php
-        _e('HTML Before Title', 'tsp_featured_categories') ?></label>
+        _e('HTML Before Title', 'tsp-featured-categories') ?></label>
    <input id="<?php
         echo $this->get_field_id('beforetitle'); ?>" name="<?php
         echo $this->get_field_name('beforetitle'); ?>" value="<?php
@@ -366,7 +414,7 @@ class TSP_Facepile_Widget extends WP_Widget
 <p>
    <label for="<?php
         echo $this->get_field_id('aftertitle'); ?>"><?php
-        _e('HTML After Title', 'tsp_featured_categories') ?></label>
+        _e('HTML After Title', 'tsp-featured-categories') ?></label>
    <input id="<?php
         echo $this->get_field_id('aftertitle'); ?>" name="<?php
         echo $this->get_field_name('aftertitle'); ?>" value="<?php
@@ -374,5 +422,5 @@ class TSP_Facepile_Widget extends WP_Widget
 </p>
    <?php
     }
-} //end class TSP_Facepile_Widget
+} //end class TSPFCP_Widget
 ?>

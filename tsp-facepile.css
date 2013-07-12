@@ -1,7 +1,7 @@
 /* TSP Facepile Stylesheet */
-.tspf_wp_user_grid{
+.tspfcp_wp_user_grid{
 }
-.tspf_wp_user_grid table{
+.tspfcp_wp_user_grid table{
 	width:auto;
 	border: none;
 	border-top: none;
@@ -9,22 +9,22 @@
 	margin: 0px;
 	line-height: 0px;
 }
-.tspf_wp_user_table_cell{
+.tspfcp_wp_user_table_cell{
 }
 
-.tspf_wp_user_grid_text{
+.tspfcp_wp_user_grid_text{
 }
 
-.tspf_wp_user_table{
+.tspfcp_wp_user_table{
 }
 
-.tspf_wp_user_table td{
+.tspfcp_wp_user_table td{
 	padding:0px;
 	border: none;
 	border-top: none;
 	border-bottom: none;
 }
-.tspf_wp_user_table .tspf_wp_user_table_cell img{
+.tspfcp_wp_user_table .tspfcp_wp_user_table_cell img{
 	border-radius: 0px;
 	box-shadow:none;
 }
