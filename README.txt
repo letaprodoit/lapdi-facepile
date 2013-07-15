@@ -54,6 +54,10 @@ In CSS the attribute to add settings for is `tspfcp_wp_user_table_cell`. Sample 
 
 == Changelog ==
 
-
+= 1.0.1 =
+* Checks for existence of parent settings menu before overwriting it
 
 == Upgrade notice ==
+
+= 1.0.1 =
+Menu fix.
