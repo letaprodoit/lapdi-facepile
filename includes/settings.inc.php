@@ -268,9 +268,19 @@ function fn_tspfcp_register_settings() {
 
 function fn_tspfcp_add_admin_menu() 
 {
-	add_menu_page( 'TSP Plugins', 'TSP Plugins', 'manage_options', 'tsp_plugins', 'fn_tsp_plugins_add_menu_render', WP_CONTENT_URL."/plugins/tsp-facepile/images/tsp_icon_16.png", 2617638); 
-	add_submenu_page('tsp_plugins', __( 'Facepile', 'tsp-facepile' ), __( 'Facepile', 'tsp-facepile' ), 'manage_options', "tsp-facepile.php", 'fn_tspfcp_settings_page');
+	$parent_slug 	= 'tsp_plugins';
+	$child_slug 	= 'tsp-facepile.php';
 
+	if ( !menu_page_url( $parent_slug, false ) )
+	{
+		add_menu_page( 'TSP Plugins', 'TSP Plugins', 'manage_options', $parent_slug, 'fn_tsp_plugins_add_menu_render', WP_CONTENT_URL."/plugins/tsp-facepile/images/tsp_icon_16.png", 2617638); 
+	}//endif
+			
+	if ( !menu_page_url( $menu_slug, false ) )
+	{				
+		add_submenu_page($parent_slug, __( 'Facepile', 'tsp-facepile' ), __( 'Facepile', 'tsp-facepile' ), 'manage_options', $child_slug, 'fn_tspfcp_settings_page');
+	}//endif
+	
 	//call register settings function
 	add_action( 'admin_init', 'fn_tspfcp_register_settings' );
 }
