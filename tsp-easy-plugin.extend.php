@@ -1,8 +1,4 @@
 <?php				
-
-//--------------------------------------------------------
-// Classes
-//--------------------------------------------------------
 /**
  * TSP_Easy_Plugin_Settings_Facepile - Extends the TSP_Plugin_Settings Class
  * @package TSP_Easy_Plugin
@@ -31,111 +27,111 @@ class TSP_Easy_Plugin_Settings_Facepile extends TSP_Easy_Plugin_Settings
 	 */
 	public function display_parent_page()
 	{
-		$active_plugins		= get_option('active_plugins');
-		$all_plugins 		= get_plugins();
+		$active_plugins			= get_option('active_plugins');
+		$all_plugins 			= get_plugins();
 	
-		$store_url 			= $this->plugin_globals['store_url'];
-		$wp_query 			= $this->plugin_globals['wp_query'];
-		$contact_url 		= $this->plugin_globals['contact_url'];
+		$free_active_plugins 	= array();
+		$free_installed_plugins = array();
+		$free_recommend_plugins = array();
 		
-		$blog_url			= get_bloginfo( "url" );
+		$pro_active_plugins 	= array();
+		$pro_installed_plugins 	= array();
+		$pro_recommend_plugins 	= array();
 		
-		$title 				= $this->plugin_globals['parent_title'];
+		$plugins_txt = file_get_contents( $this->plugin_globals['plugin_list'] );
+		$tsp_plugins =  preg_split( "/\n/", $plugins_txt );
 
-		$array_activate 	= array();
-		$array_install		= array();
-		$array_recomend 	= array();
-		$count_activate 	= $count_install = $count_recomend = 0;
-		$array_plugins	= array(
-			array( 'tsp-easy-plugin\/tsp-easy-plugin.php', 					'Easy Plugin', 			"$store_url/easy-plugin-for-wordpress.html#description",		"$store_url/easy-plugin-for-wordpress.html",		"$wp_query=TSP+Easy+Plugin",		'#' ), 
-			array( 'tsp-featured-categories\/tsp-featured-categories.php', 	'Featured Categories', 	"$store_url/featured-categories-for-wordpress.html#description","$store_url/featured-categories-for-wordpress.html","$wp_query=TSP+Featured+Categories",'admin.php?page=tsp-featured-categories.php' ), 
-			array( 'tsp-featured-posts\/tsp-featured-posts.php', 			'Featured Posts', 		"$store_url/featured-posts-for-wordpress.html#description", 	"$store_url/featured-posts-for-wordpress.html", 	"$wp_query=TSP+Featured+Posts", 	'admin.php?page=tsp-featured-posts.php' ), 
-			array( 'tsp-facepile\/tsp-facepile.php', 						'Facepile', 			"$store_url/facepile-for-wordpress.html#description", 			"$store_url/facepile-for-wordpress.html", 			"$wp_query=TSP+Facepile", 			'admin.php?page=tsp-facepile.php' ), 
-			array( 'tsp-disable-auto-save\/tsp-disable-auto-save.php', 		'Disable Auto-Save', 	"$store_url/disable-autosave-for-wordpress.html#description", 	"$store_url/disable-autosave-for-wordpress.html",	"$wp_query=TSP+Disable+Auto+Save", 	'#' ), 
-		);
-		
-		foreach ( $array_plugins as $plugins ) 
+		foreach ( $tsp_plugins as $line => $meta )
 		{
-			if( 0 < count( preg_grep( "/".$plugins[0]."/", $active_plugins ) ) ) 
+			$tsp_plugins[$line] = preg_split("/\|/", $meta );
+			
+			$plugin_data = $tsp_plugins[$line];
+			
+			$plugin_type 	= $plugin_data[0];
+			$plugin_file	= $plugin_data[1];
+			
+			$saved_plugin = array (
+				'title' 	=> $plugin_data[2],
+				'desc' 		=> $plugin_data[3],
+				'more_url' 	=> $plugin_data[4],
+				'store_url' => $plugin_data[5],
+				'wp_url' 	=> $plugin_data[6],
+				'settings' 	=> $plugin_data[7]
+			);
+			
+			if ( $plugin_type == 'FREE' )
 			{
-				$array_activate[$count_activate]["title"] 	= $plugins[1];
-				$array_activate[$count_activate]["link"] 	= $plugins[2];
-				$array_activate[$count_activate]["href"]	= $plugins[3];
-				$array_activate[$count_activate]["url"]		= $plugins[5];
-				$count_activate++;
-			} //endif
-			elseif ( array_key_exists(str_replace( "\\", "", $plugins[0]), $all_plugins ) ) 
+				if ( in_array(str_replace( "\\", "", $plugin_file), $active_plugins ) )
+				{
+					$free_active_plugins[] = $saved_plugin;
+				}//endif
+				elseif ( array_key_exists(str_replace( "\\", "", $plugin_file), $all_plugins ) )
+				{
+					$free_installed_plugins[] = $saved_plugin;
+				}//end elseif
+				else
+				{
+					$free_recommend_plugins[] = $saved_plugin;
+				}//endelse
+			}//endif
+			elseif ( $plugin_type == 'PRO' )
 			{
-				$array_install[$count_install]["title"] 	= $plugins[1];
-				$array_install[$count_install]["link"]		= $plugins[2];
-				$array_install[$count_install]["href"]		= $plugins[3];
-				$count_install++;
-			}//endelseif 
-			else 
-			{
-				$array_recomend[$count_recomend]["title"] 	= $plugins[1];
-				$array_recomend[$count_recomend]["link"] 	= $plugins[2];
-				$array_recomend[$count_recomend]["href"] 	= $plugins[3];
-				$array_recomend[$count_recomend]["slug"] 	= $plugins[4];
-				$count_recomend++;
-			}//endelse
+				if ( in_array(str_replace( "\\", "", $plugin_file), $active_plugins ) )
+				{
+					$pro_active_plugins[] = $saved_plugin;
+				}//endif
+				elseif ( array_key_exists(str_replace( "\\", "", $plugin_file), $all_plugins ) )
+				{
+					$pro_installed_plugins[] = $saved_plugin;
+				}//endelseif
+				else
+				{
+					$pro_recommend_plugins[] = $saved_plugin;
+				}//endelse
+			}//endelseif
+			
 		}//endforeach
 		
-		$array_activate_pro = array();
-		$array_install_pro	= array();
-		$array_recomend_pro = array();
-		$count_activate_pro = $count_install_pro = $count_recomend_pro = 0;
-		$array_plugins_pro	= array(
-			array( 'tsp-easy-plugin-pro\/tsp-easy-plugin-pro.php', 			'Easy Plugin (Pro)', 	"$store_url/easy-plugin-for-wordpress.html#description",	"$store_url/easy-plugin-for-wordpress.html",		"$store_url/easy-plugin-for-wordpress.html",		'#' ), 
-		);
+		$free_active_count									= count($free_active_plugins);
+		$free_installed_count 								= count($free_installed_plugins);
+		$free_recommend_count 								= count($free_recommend_plugins);
+
+		$free_total											= $free_active_count + $free_installed_count + $free_recommend_count;
+
+		$pro_active_count									= count($pro_active_plugins);
+		$pro_installed_count 								= count($pro_installed_plugins);
+		$pro_recommend_count 								= count($pro_recommend_plugins);
 		
-		foreach ( $array_plugins_pro as $plugins ) 
-		{
-			if( 0 < count( preg_grep( "/".$plugins[0]."/", $active_plugins ) ) ) 
-			{
-				$array_activate_pro[$count_activate_pro]["title"] 	= $plugins[1];
-				$array_activate_pro[$count_activate_pro]["link"] 	= $plugins[2];
-				$array_activate_pro[$count_activate_pro]["href"] 	= $plugins[3];
-				$array_activate_pro[$count_activate_pro]["url"]		= $plugins[4];
-				$count_activate_pro++;
-			} 
-			else if( array_key_exists(str_replace( "\\", "", $plugins[0]), $all_plugins ) ) 
-			{
-				$array_install_pro[$count_install_pro]["title"] 	= $plugins[1];
-				$array_install_pro[$count_install_pro]["link"]		= $plugins[2];
-				$array_install_pro[$count_install_pro]["href"]		= $plugins[3];
-				$count_install_pro++;
-			} 
-			else 
-			{
-				$array_recomend_pro[$count_recomend_pro]["title"] 	= $plugins[1];
-				$array_recomend_pro[$count_recomend_pro]["link"] 	= $plugins[2];
-				$array_recomend_pro[$count_recomend_pro]["href"] 	= $plugins[3];
-				$count_recomend_pro++;
-			}
-		}//endforeach
-		
+		$pro_total											= $pro_active_count + $pro_installed_count + $pro_recommend_count;
+				
 		// Display settings to screen
 		$smarty = new Smarty();
 		$smarty->setTemplateDir( $this->plugin_globals['templates'] );
 		$smarty->setCompileDir( $this->plugin_globals['smarty_compiled'] );
 		$smarty->setCacheDir( $this->plugin_globals['smarty_cache'] );
 		
-		$smarty->assign( 'count_activate_pro',		$count_activate_pro);
-		$smarty->assign( 'array_activate_pro',		$array_activate_pro);
-		$smarty->assign( 'count_install_pro',		$count_install_pro);
-		$smarty->assign( 'array_install_pro',		$array_install_pro);
-		$smarty->assign( 'count_recomend_pro',		$count_recomend_pro);
-		$smarty->assign( 'array_recomend_pro',		$array_recomend_pro);
-		$smarty->assign( 'count_activate',			$count_activate);
-		$smarty->assign( 'array_activate',			$array_activate);
-		$smarty->assign( 'count_recomend',			$count_recomend);
-		$smarty->assign( 'array_recomend',			$array_recomend);
+		$smarty->assign( 'free_active_count',		$free_active_count);
+		$smarty->assign( 'free_installed_count',	$free_installed_count);
+		$smarty->assign( 'free_recommend_count',	$free_recommend_count);
 
-		$smarty->assign( 'title',					$title);
-		$smarty->assign( 'contact_url',				$contact_url);
-
+		$smarty->assign( 'pro_active_count',		$pro_active_count);
+		$smarty->assign( 'pro_installed_count',		$pro_installed_count);
+		$smarty->assign( 'pro_recommend_count',		$pro_recommend_count);
 		
+		$smarty->assign( 'free_active_plugins',		$free_active_plugins);
+		$smarty->assign( 'free_installed_plugins',	$free_installed_plugins);
+		$smarty->assign( 'free_recommend_plugins',	$free_recommend_plugins);
+
+		$smarty->assign( 'pro_active_plugins',		$pro_active_plugins);
+		$smarty->assign( 'pro_installed_plugins',	$pro_installed_plugins);
+		$smarty->assign( 'pro_recommend_plugins',	$pro_recommend_plugins);
+
+		$smarty->assign( 'free_total',				$free_total);
+		$smarty->assign( 'pro_total',				$pro_total);
+
+		$smarty->assign( 'title',					"WordPress Plugins by The Software People");
+		$smarty->assign( 'contact_url',				$this->plugin_globals['contact_url']);
+
 		$smarty->display( $this->plugin_globals['name'] . '_admin_menu.tpl');
 	}//end ad_menu
 	

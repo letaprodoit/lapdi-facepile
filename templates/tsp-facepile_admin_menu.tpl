@@ -1,76 +1,97 @@
 <div class="wrap">
 	<div class="icon32 icon32-tsp" id="icon-options-general"></div>
 	<h2>{$title}</h2>
-	<h3 style="color: #B4100E;">Professional WordPress Plugins</h3>
-	{if  0 < $count_activate_pro}
-		<div style="padding-left:15px;">
-			<h4>Activated plugins</h4>
-			{foreach $array_activate_pro as $activate_plugin}
-				<div style="float:left; width:200px;">{$activate_plugin.title}</div> 
-				<p>
-					<a href="{$activate_plugin.title}" target="_blank">Read more</a>
-					<a href="{$activate_plugin.url}">Settings</a>
-				</p>
-			{/foreach}
-		</div>
+	{if $pro_total > 0}
+		<h3 style="font-size:1.5em;">Professional Plugins</h3>
+		{if $pro_active_count > 0}
+			<div>
+				<h4 class="icon-ok" style="font-size:1.25em; color:green;">&nbsp;<span style="color:black;">Activated Plugins</span></h4>
+				{foreach $pro_active_plugins as $pro_active}
+				<dl>
+					<dt>{$pro_active.title} - <em>{$pro_active.desc}</em></dt> 
+					<dd>
+						<a href="{$pro_active}" target="_blank">Read More</a>
+						<a href="{$pro_active.settings}">Settings</a>
+					</dd>
+				</dl>
+				{/foreach}
+			</div>
+		{/if}
+		{if $pro_installed_count > 0}
+			<div>
+				<h4 class="icon-off" style="font-size:1.25em; color:orange;">&nbsp;<span style="color:black;">Installed Plugins</span></h4>
+				{foreach $pro_installed_plugins as $pro_installed}
+				<dl>
+					<dt>{$pro_installed.title} - <em>{$pro_installed.desc}</em></dt>
+					<dd>
+						<a href="{$pro_installed.more_url}" target="_blank">Read More</a>
+						<a href="{$pro_installed.settings}">Settings</a>
+					</dd>
+				</dl>
+				{/foreach}
+			</div>
+		{/if}
+		{if  $pro_recommend_count > 0 }
+			<div>
+				<h4 class="icon-thumbs-up-alt" style="font-size:1.25em; color:blue;">&nbsp;<span style="color:black;">Recommended Plugins</span></h4>
+				{foreach $pro_recommend_plugins as $pro_recommend }
+				<dl>
+					<dt>{$pro_recommend.title} - <em>{$pro_recommend.desc}</em></dt> 
+					<dd>
+						<a href="{$pro_recommend.more_url}" target="_blank">Read More</a>
+						<a href="{$pro_recommend.store_url}" target="_blank">Purchase</a>
+					</dd>
+				</dl>
+				{/foreach}
+			</div>
+		{/if}
+		<br />
 	{/if}
-	{if  0 < $count_install_pro}
-		<div style="padding-left:15px;">
-			<h4>Installed plugins</h4>
-			{foreach $array_install_pro as $install_plugin}
-				<div style="float:left; width:200px;">{$install_plugin.title}</div>
-				<p><a href="{$install_plugin.link}" target="_blank">Read more</a></p>
-			{/foreach}
-		</div>
+	{if $free_total > 0}
+		<h3 style="font-size:1.5em;">Free Plugins</h3>
+		{if $free_active_count > 0}
+			<div>
+				<h4 class="icon-ok" style="font-size:1.25em; color:green;">&nbsp;<span style="color:black;">Activated Plugins</span></h4>
+				{foreach $free_active_plugins as $free_active}
+				<dl>
+					<dt>{$free_active.title} - <em>{$free_active.desc}</em></dt> 
+					<dd>
+						<a href="{$free_active.more_url}" target="_blank">Read More</a>
+						<a href="{$free_active.settings}">Settings</a>
+					</dd>
+				</dl>
+				{/foreach}
+			</div>
+		{/if}
+		{if $free_installed_count > 0}
+			<div>
+				<h4 class="icon-off" style="font-size:1.25em; color:orange;">&nbsp;<span style="color:black;">Installed Plugins</span></h4>
+				{foreach $free_installed_plugins as $free_installed}
+				<dl>
+					<dt>{$free_installed.title} - <em>{$free_installed.desc}</em></dt>
+					<dd>
+						<a href="{$free_installed.more_url}" target="_blank">Read More</a>
+						<a href="{$free_installed.settings}">Settings</a>
+					</dd>
+				</dl>
+				{/foreach}
+			</div>
+		{/if}
+		{if  $free_recommend_count > 0 }
+			<div>
+				<h4 class="icon-thumbs-up-alt" style="font-size:1.25em; color:blue;">&nbsp;<span style="color:black;">Recommended Plugins</span></h4>
+				{foreach $free_recommend_plugins as $free_recommend }
+				<dl>
+					<dt>{$free_recommend.title} - <em>{$free_recommend.desc}</em></dt> 
+					<dd>
+						<a href="{$free_recommend.more_url}" target="_blank">Read More</a>
+						<a href="{$free_recommend.settings}">Settings</a>
+					</dd>
+				</dl>
+				{/foreach}
+			</div>
+		{/if}
+		<br />
 	{/if}
-	{if  0 < $count_recomend_pro }
-		<div style="padding-left:15px;">
-			<h4>Recommended plugins</h4>
-			{foreach $array_recomend_pro as $recomend_plugin }
-				<div style="float:left; width:200px;">{$recomend_plugin.title}</div> 
-				<p>
-					<a href="{$recomend_plugin.link}" target="_blank">Read more</a>
-					<a href="{$recomend_plugin.href}" target="_blank">Purchase</a>
-				</p>
-			{/foreach}
-		</div>
-	{/if}
-	<br />
-	<h3 style="color: #1A77B1">Free WordPress Plugins</h3>
-	{if  0 < $count_activate }
-		<div style="padding-left:15px;">
-			<h4>Activated plugins</h4>
-			{foreach $array_activate as $activate_plugin }
-				<div style="float:left; width:200px;">{$activate_plugin.title}</div> 
-				<p>
-					<a href="{$activate_plugin.link}" target="_blank">Read more</a> 
-					<a href="{$activate_plugin.url}">Settings</a>
-				</p>
-			{/foreach}
-		</div>
-	{/if}
-	{if  0 < $count_install }
-		<div style="padding-left:15px;">
-			<h4>Installed plugins</h4>
-			{foreach $array_install as $install_plugin }
-				<div style="float:left; width:200px;">{$install_plugin.title}</div>
-				<p><a href="{$install_plugin.link}" target="_blank">Read more</a></p>
-			{/foreach}
-		</div>
-	{/if}
-	{if  0 < $count_recomend }
-		<div style="padding-left:15px;">
-			<h4>Recommended plugins</h4>
-			{foreach $array_recomend as $recomend_plugin }
-				<div style="float:left; width:200px;">{$recomend_plugin.title}</div> 
-				<p>
-					<a href="{$recomend_plugin.link}" target="_blank">Read more</a>
-					<a href="{$recomend_plugin.href}" target="_blank">Download</a> 
-					<a class="install-now" href="{$blog_url} {$recomend_plugin.slug}; ?>" title="Install {$recomend_plugin.title}" target="_blank">Install now from wordpress.org</a>
-				</p>
-			{/foreach}
-		</div>
-	{/if}
-	<br />		
 	<span style="color: rgb(136, 136, 136); font-size: 10px;">If you have any questions, please contact us via <a target="_blank" href="{$contact_url}">{$contact_url}</a></span>
 </div>

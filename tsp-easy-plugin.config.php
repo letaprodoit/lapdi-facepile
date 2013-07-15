@@ -113,6 +113,7 @@ function fn_tsp_facepile_get_globals()
 	$plugin_globals['store_url']	 	= 'http://www.thesoftwarepeople.com/software/plugins/wordpress';
 	$plugin_globals['wp_query'] 		= '/wp-admin/plugin-install.php?tab=search&type=term&s';
 	$plugin_globals['contact_url'] 		= 'http://www.thesoftwarepeople.com/about-us/contact-us.html';
+	$plugin_globals['plugin_list']		= 'http://www.thesoftwarepeople.com/plugins/wordpress/plugin_list.txt';
 
 	return $plugin_globals;
 }// fn_tsp_easy_plugin_get_globals

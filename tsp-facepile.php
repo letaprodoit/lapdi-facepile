@@ -48,6 +48,7 @@ $facepile->add_link ( 'Support', 		'http://wordpress.org/support/plugin/' . TSPF
 
 $facepile->add_css( TSPFCP_PLUGIN_URL . 'tsp-facepile.css' );
 $facepile->add_css( TSP_EASY_PLUGIN_ASSETS_CSS_URL . 'style.css', true );
+$facepile->add_css( TSP_EASY_PLUGIN_ASSETS_CSS_URL . 'font-awesome.css', true );
 $facepile->add_script( TSP_EASY_PLUGIN_ASSETS_JS_URL . 'skel.min.js', true );
 
 $facepile->set_plugin_icon( TSP_EASY_PLUGIN_ASSETS_IMAGES_URL . 'tsp_icon_16.png' );
