@@ -1,10 +1,10 @@
 === TSP Facepile ===
 Contributors: thesoftwarepeople,sharrondenice
 Donate link: http://www.thesoftwarepeople.com/software/plugins/wordpress/facepile-for-wordpress.html
-Tags: display faces tiles members list grid the software people
+Tags: display, faces, tiles, members, list, grid, the software people
 Requires at least: 3.5.1
 Tested up to: 3.5.2
-Stable tag: 1.0.1
+Stable tag: 1.1.0
 License: Apache v2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0
 
@@ -19,7 +19,7 @@ The Software People's (TSP) Facepile plugin allows you to add wordpress users ph
 Add a `Facepile` to posts and pages by using a shortcode inside your text or evaluated from within your theme. You may override page/post `Facepile` options with shortcode attributes defined on the plugin's settings page.
 
 * `[tsp-facepile]` - Will display a facepile with the default options defined in the plugin's settings page.
-* `[tsp-facepile title="Facepile" shownames="Y" tspfcp_rows="4" tspfcp_cols="4" widththumb="80" heightthumb="80" beforetitle="" aftertitle=""]` - Will override all attributes defined on the plugin's settings page.
+* `[tsp-facepile title="Facepile" show_names="Y" show_count="Y" num_rows="4" num_cols="4" thumb_width="80" thumb_height="80" before_title="" after_title=""]` - Will override all attributes defined on the plugin's settings page.
 
 == Installation ==
 
