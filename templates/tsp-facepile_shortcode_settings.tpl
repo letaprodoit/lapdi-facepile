@@ -1,5 +1,5 @@
  <div class="tsp_container">
-	<div class="icon32 tsp_icon" id="tsp_icon-options-general"></div>
+	<div class="icon32" id="tsp_icon"></div>
 	<h2>Facepile Default Settings (The Software People)</h2>
 	<div class="mycomment">
 		<p><h3>Using Facepile Shortcode <a href="#" class="toggle">(hide/show details)</a>:</h3></p>
@@ -39,14 +39,7 @@
 	<form method="post" action="admin.php?page={$plugin_name}.php">
 		<fieldset>
 		{foreach $form_fields as $field}
-			<div class="tsp_form_element" id="{$field.name}_container_div" style="">
-				<p>
-					{include file="$EASY_PLUGIN_FORM_FIELDS" field=$field}
-				</p>
-				
-				<div class="clear"></div>
-				<div id="error-message-name"></div>
-			</div>
+			{include file="$EASY_PLUGIN_FORM_FIELDS" field=$field}
 		{/foreach}
 		</fieldset>
 		<input type="hidden" name="{$plugin_name}_form_submit" value="submit" />
