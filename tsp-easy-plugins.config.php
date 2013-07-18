@@ -1,8 +1,8 @@
 <?php									
 /* @group Easy Plugins Package settings, all plugins use the same settings, DO NOT EDIT */
-define('TSP_PARENT_NAME', 					'tsp_plugins');
-define('TSP_PARENT_TITLE', 					'TSP Plugins');
-define('TSP_PARENT_MENU_POS', 				2617638);
+if ( !defined( 'TSP_PARENT_NAME' )) define('TSP_PARENT_NAME', 			'tsp_plugins');
+if ( !defined( 'TSP_PARENT_TITLE' )) define('TSP_PARENT_TITLE', 		'TSP Plugins');
+if ( !defined( 'TSP_PARENT_MENU_POS' )) define('TSP_PARENT_MENU_POS', 	2617638);
 /* @end */
 
 // Get the plugin path
@@ -45,11 +45,11 @@ $plugin_globals['contact_url'] 			= 'http://www.thesoftwarepeople.com/about-us/c
 $plugin_globals['plugin_list']			= 'http://www.thesoftwarepeople.com/plugins/wordpress/plugin_list.txt';
 //* Custom globals *//
 
-$plugin_globals['form_fields']			= array(		
+$plugin_globals['widget_fields']		= array(		
 		'title' 		=> array( 
 			'type' 			=> 'INPUT', 
 			'label' 		=> 'Title', 
-			'value' 		=> '',
+			'value' 		=> 'TSP Facepile',
 		),		
 		'show_names' 	=> array( 
 			'type' 			=> 'SELECT', 
