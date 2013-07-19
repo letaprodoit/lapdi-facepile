@@ -31,13 +31,11 @@ $plugin_globals['file']	 				= TSPFCP_PLUGIN_FILE;
 $plugin_globals['widget_width']	 		= 300;
 $plugin_globals['widget_height'] 		= 350;
 
-$plugin_globals['easy_templates'] 		= TSP_EASY_PLUGINS_ASSETS_TEMPLATES_PATH;
-
-$plugin_globals['smarty_compiled']  	= TSP_EASY_PLUGINS_TMP_PATH . TSPFCP_PLUGIN_NAME . DS . 'compiled';
-$plugin_globals['smarty_cache'] 		= TSP_EASY_PLUGINS_TMP_PATH . TSPFCP_PLUGIN_NAME . DS . 'cache';
+$plugin_globals['smarty_template_dirs']	= array( TSPFCP_PLUGIN_PATH . 'templates', TSP_EASY_PLUGINS_ASSETS_TEMPLATES_PATH );
+$plugin_globals['smarty_compiled_dir']  = TSP_EASY_PLUGINS_TMP_PATH . TSPFCP_PLUGIN_NAME . DS . 'compiled';
+$plugin_globals['smarty_cache_dir'] 	= TSP_EASY_PLUGINS_TMP_PATH . TSPFCP_PLUGIN_NAME . DS . 'cache';
 
 //* Custom globals *//
-$plugin_globals['templates'] 			= TSPFCP_PLUGIN_PATH . 'templates';
 $plugin_globals['title_short']			= preg_replace("/TSP/","",$plugin_globals['Name']);
 $plugin_globals['store_url']	 		= 'http://www.thesoftwarepeople.com/software/plugins/wordpress';
 $plugin_globals['wp_query'] 			= '/wp-admin/plugin-install.php?tab=search&type=term&s';
@@ -45,7 +43,8 @@ $plugin_globals['contact_url'] 			= 'http://www.thesoftwarepeople.com/about-us/c
 $plugin_globals['plugin_list']			= 'http://www.thesoftwarepeople.com/plugins/wordpress/plugin_list.txt';
 //* Custom globals *//
 
-$plugin_globals['widget_fields']		= array(		
+$plugin_globals['plugin_data']			= array(
+	'widget_fields'						=> array(
 		'title' 		=> array( 
 			'type' 			=> 'INPUT', 
 			'label' 		=> 'Title', 
@@ -96,5 +95,6 @@ $plugin_globals['widget_fields']		= array(
 			'html'			=> true,
 			'old_labels'	=> array ('aftertitle'),
 		)
-	); //end array
+	),		
+);
 ?>

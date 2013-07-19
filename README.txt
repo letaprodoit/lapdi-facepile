@@ -8,11 +8,11 @@ Stable tag: 1.1.0
 License: Apache v2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0
 
-Facepile allows you to add wordpress users photo icons to your blog's website in grid format.
+Facepile allows you to add WordPress users photo icons to your blog's website in grid format.
 
 == Description ==
 
-The Software People's (TSP) Facepile plugin allows you to add wordpress users photo icons to your blog's website in grid format.
+The Software People's (TSP) Facepile plugin allows you to add WordPress users photo icons to your blog's website in grid format.
 
 = Shortcodes =
 
@@ -54,6 +54,9 @@ In CSS the attribute to add settings for is `tspfcp_wp_user_table_cell`. Sample 
 
 == Changelog ==
 
+= 1.1.0 =
+* Now uses Easy Plugins for easy plugin modification, embracing OOD
+
 = 1.0.1 =
 * Checks for existence of parent settings menu before overwriting it
 
@@ -61,6 +64,9 @@ In CSS the attribute to add settings for is `tspfcp_wp_user_table_cell`. Sample 
 * Launch
 
 == Upgrade notice ==
+
+= 1.1.0 =
+Plugin now requires TSP Easy Plugins.
 
 = 1.0.1 =
 Menu fix.

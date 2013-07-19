@@ -105,11 +105,9 @@ class TSP_Easy_Plugins_Settings_Facepile extends TSP_Easy_Plugins_Settings
 		$pro_total											= $pro_active_count + $pro_installed_count + $pro_recommend_count;
 				
 		// Display settings to screen
-		$template_dirs = array( $this->plugin_globals['templates'], $this->plugin_globals['easy_templates'] );
-		$cache_dir = $this->plugin_globals['smarty_cache'];
-		$compiled_dir = $this->plugin_globals['smarty_compiled'];
-		
-		$smarty = TSP_Easy_Plugins_Smarty::get_smarty( $template_dirs, $cache_dir, $compiled_dir );
+		$smarty = new TSP_Easy_Plugins_Smarty( $this->plugin_globals['smarty_template_dirs'], 
+			$this->plugin_globals['smarty_cache_dir'], 
+			$this->plugin_globals['smarty_compiled_dir'], true );
 		$smarty->assign( 'free_active_count',		$free_active_count);
 		$smarty->assign( 'free_installed_count',	$free_installed_count);
 		$smarty->assign( 'free_recommend_count',	$free_recommend_count);
@@ -151,8 +149,8 @@ class TSP_Easy_Plugins_Settings_Facepile extends TSP_Easy_Plugins_Settings
 		$error = "";
 		
 		// get settings from database
-		$database_options = get_option( $this->plugin_globals['option_name'] );
-		$defaults = new TSP_Easy_Plugins_Data ( $database_options['widget_fields'] );
+		$plugin_data = get_option( $this->plugin_globals['option_name'] );
+		$defaults = new TSP_Easy_Plugins_Data ( $plugin_data['widget_fields'] );
 
 		$form = null;
 		if ( array_key_exists( $this->plugin_globals['name'] . '_form_submit', $_REQUEST ))
@@ -164,9 +162,9 @@ class TSP_Easy_Plugins_Settings_Facepile extends TSP_Easy_Plugins_Settings
 		if( isset( $form ) && check_admin_referer( $this->plugin_globals['name'], $this->plugin_globals['name'] . '_nonce_name' ) ) 
 		{
 			$defaults->set_values( $_POST );
-			$database_options['widget_fields'] = $defaults->get();
+			$plugin_data['widget_fields'] = $defaults->get();
 			
-			update_option( $this->plugin_globals['option_name'], $database_options );
+			update_option( $this->plugin_globals['option_name'], $plugin_data );
 			
 			$message = __( "Options saved.", $this->plugin_globals['name'] );
 		}
@@ -174,11 +172,9 @@ class TSP_Easy_Plugins_Settings_Facepile extends TSP_Easy_Plugins_Settings
 		$form_fields = $defaults->get_values( true );
 
 		// Display settings to screen
-		$template_dirs = array( $this->plugin_globals['templates'], $this->plugin_globals['easy_templates'] );
-		$cache_dir = $this->plugin_globals['smarty_cache'];
-		$compiled_dir = $this->plugin_globals['smarty_compiled'];
-		
-		$smarty = TSP_Easy_Plugins_Smarty::get_smarty( $template_dirs, $cache_dir, $compiled_dir, true );
+		$smarty = new TSP_Easy_Plugins_Smarty( $this->plugin_globals['smarty_template_dirs'], 
+			$this->plugin_globals['smarty_cache_dir'], 
+			$this->plugin_globals['smarty_compiled_dir'], true );
 		$smarty->assign( 'form_fields',				$form_fields);
 		$smarty->assign( 'message',					$message);
 		$smarty->assign( 'error',					$error);
@@ -211,26 +207,31 @@ class TSP_Easy_Plugins_Settings_Facepile extends TSP_Easy_Plugins_Settings
 class TSP_Easy_Plugins_Widget_Facepile extends TSP_Easy_Plugins_Widget
 {
 	/**
-	 * PHP4 constructor
-	 */
-	public function TSP_Easy_Plugins_Widget_Facepile() 
-	{
-		TSP_Easy_Plugins_Widget_Facepile::__construct();
-	}//end TSP_Plugin_Widget
-
-	/**
-	 * PHP5 constructor
-	 */
+	 * Constructor
+	 */	
 	public function __construct() 
 	{
-		// TODO: figure out a way to set globals without doing it directly
-		$this->plugin_globals 		= get_option ( 'tsp-facepile-option' );
-		
-        // Create the widget
-		parent::__construct( $this->plugin_globals );
+		add_filter( 'TSP_Easy_Plugins_Widget_Facepile-init', array($this, 'init'), 10, 1 );
 	}//end __construct
 
 	
+	/**
+	 * Function added to filter to allow initialization of widget
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param array $globals Required - array of global variables
+	 *
+	 * @return none
+	 */
+	public function init( $globals )
+	{
+		$this->plugin_globals = $globals;
+		
+        // Create the widget
+		parent::__construct( $this->plugin_globals );
+	}
+
 	/**
 	 * Override required of form function to display widget information
 	 *
@@ -251,14 +252,13 @@ class TSP_Easy_Plugins_Widget_Facepile extends TSP_Easy_Plugins_Widget
 			$fields[$key]['name'] 		= $this->get_field_name($key);
 		}//end foreach
 
-		$template_dirs = array( $this->plugin_globals['templates'], $this->plugin_globals['easy_templates'] );
-		$cache_dir = $this->plugin_globals['smarty_cache'];
-		$compiled_dir = $this->plugin_globals['smarty_compiled'];
-		
-		$smarty = TSP_Easy_Plugins_Smarty::get_smarty( $template_dirs, $cache_dir, $compiled_dir, true );
-    	$smarty->assign('form_fields', $fields);
-    	$smarty->assign('class', 'widefat');
-		$smarty->display( 'default_form.tpl');
+		$smarty = new TSP_Easy_Plugins_Smarty( $this->plugin_globals['smarty_template_dirs'], 
+			$this->plugin_globals['smarty_cache_dir'], 
+			$this->plugin_globals['smarty_compiled_dir'], true );
+    	
+    	$smarty->assign( 'form_fields', $fields );
+    	$smarty->assign( 'class', 'widefat' );
+		$smarty->display( 'default_form.tpl' );
 	}//end form
 	
 	/**
@@ -298,11 +298,9 @@ class TSP_Easy_Plugins_Widget_Facepile extends TSP_Easy_Plugins_Widget
 	
 		if (!empty($users))
 		{
-			$template_dirs = array( $this->plugin_globals['templates'], $this->plugin_globals['easy_templates'] );
-			$cache_dir = $this->plugin_globals['smarty_cache'];
-			$compiled_dir = $this->plugin_globals['smarty_compiled'];
-			
-			$smarty = TSP_Easy_Plugins_Smarty::get_smarty( $template_dirs, $cache_dir, $compiled_dir );
+			$smarty = new TSP_Easy_Plugins_Smarty( $this->plugin_globals['smarty_template_dirs'], 
+				$this->plugin_globals['smarty_cache_dir'], 
+				$this->plugin_globals['smarty_compiled_dir'], true );
 
 		    // Store values into Smarty
 		    foreach ($fields as $key => $val)

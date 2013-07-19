@@ -2,7 +2,7 @@
 /*
 Plugin Name: 	TSP Facepile
 Plugin URI: 	http://www.thesoftwarepeople.com/software/plugins/wordpress/facepile-for-wordpress.html
-Description: 	Facepile allows you to add wordpress users photo icons to your blog's website in grid format.
+Description: 	Facepile allows you to add WordPress users photo icons to your blog's website in grid format.
 Author: 		The Software People
 Author URI: 	http://www.thesoftwarepeople.com/
 Version: 		1.1.0
@@ -53,7 +53,9 @@ $facepile->required_wordpress_version 	= "3.5.1";
 
 $facepile->settings						= new TSP_Easy_Plugins_Settings_Facepile();
 
-$facepile->add_css( TSPFCP_PLUGIN_URL . 'tsp-facepile.css' );
+$facepile->widget_class					= 'TSP_Easy_Plugins_Widget_Facepile';
+
+$facepile->add_css( TSPFCP_PLUGIN_URL . TSPFCP_PLUGIN_NAME . '.css' );
 $facepile->add_css( TSPFCP_PLUGIN_URL . 'css' . DS. 'admin-style.css', true );
 $facepile->add_css( TSP_EASY_PLUGINS_ASSETS_CSS_URL . 'style.css', true );
 
@@ -65,7 +67,10 @@ $facepile->add_shortcode ( 'tsp_facepile' ); //backwards compatibility
 $facepile->run( __FILE__ );
 
 // Initialize widget - Required by WordPress
-add_action('widgets_init', function () { 
-	register_widget ( 'TSP_Easy_Plugins_Widget_Facepile' ); 
+add_action('widgets_init', function () {
+	global $facepile;
+	
+	register_widget ( $facepile->widget_class ); 
+	apply_filters( $facepile->widget_class.'-init', $facepile->get_globals() );
 });
 ?>
