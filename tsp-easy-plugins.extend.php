@@ -9,11 +9,10 @@
  * @version $Id: [FILE] [] [DATE] [TIME] [USER] $
  */
 
-/**
- * Extends the TSP_Easy_Plugins_Settings_Facepile Class
- *
- * original author: Sharron Denice
- */
+ /**
+  * @method void display_parent_page()
+  * @method void display_plugin_settings_page()
+  */
 class TSP_Easy_Plugins_Settings_Facepile extends TSP_Easy_Plugins_Settings
 {
 	/**
@@ -38,58 +37,41 @@ class TSP_Easy_Plugins_Settings_Facepile extends TSP_Easy_Plugins_Settings
 		$pro_installed_plugins 	= array();
 		$pro_recommend_plugins 	= array();
 		
-		$plugins_txt = file_get_contents( $this->plugin_globals['plugin_list'] );
-		$tsp_plugins =  preg_split( "/\n/", $plugins_txt );
-
-		foreach ( $tsp_plugins as $line => $meta )
+		$json 					= file_get_contents( $this->settings['plugin_list'] );
+		$tsp_plugins 			= json_decode($json);
+		
+		foreach ( $tsp_plugins->{'plugins'} as $plugin_data )
 		{
-			$tsp_plugins[$line] = preg_split("/\|/", $meta );
-			
-			$plugin_data = $tsp_plugins[$line];
-			
-			$plugin_type 	= $plugin_data[0];
-			$plugin_file	= $plugin_data[1];
-			
-			$saved_plugin = array (
-				'title' 	=> $plugin_data[2],
-				'desc' 		=> $plugin_data[3],
-				'more_url' 	=> $plugin_data[4],
-				'store_url' => $plugin_data[5],
-				'wp_url' 	=> $plugin_data[6],
-				'settings' 	=> $plugin_data[7]
-			);
-			
-			if ( $plugin_type == 'FREE' )
+			if ( $plugin_data->{'type'} == 'FREE' )
 			{
-				if ( in_array(str_replace( "\\", "", $plugin_file), $active_plugins ) )
+				if ( in_array($plugin_data->{'name'}, $active_plugins ) )
 				{
-					$free_active_plugins[] = $saved_plugin;
+					$free_active_plugins[] = (array)$plugin_data;
 				}//endif
-				elseif ( array_key_exists(str_replace( "\\", "", $plugin_file), $all_plugins ) )
+				elseif ( array_key_exists($plugin_data->{'name'}, $all_plugins ) )
 				{
-					$free_installed_plugins[] = $saved_plugin;
+					$free_installed_plugins[] = (array)$plugin_data;
 				}//end elseif
 				else
 				{
-					$free_recommend_plugins[] = $saved_plugin;
+					$free_recommend_plugins[] = (array)$plugin_data;
 				}//endelse
 			}//endif
-			elseif ( $plugin_type == 'PRO' )
+			elseif ( $plugin_data->{'type'} == 'PRO' )
 			{
-				if ( in_array(str_replace( "\\", "", $plugin_file), $active_plugins ) )
+				if ( in_array($plugin_data->{'name'}, $active_plugins ) )
 				{
-					$pro_active_plugins[] = $saved_plugin;
+					$pro_active_plugins[] = (array)$plugin_data;
 				}//endif
-				elseif ( array_key_exists(str_replace( "\\", "", $plugin_file), $all_plugins ) )
+				elseif ( array_key_exists($plugin_data->{'name'}, $all_plugins ) )
 				{
-					$pro_installed_plugins[] = $saved_plugin;
+					$pro_installed_plugins[] = (array)$plugin_data;
 				}//endelseif
 				else
 				{
-					$pro_recommend_plugins[] = $saved_plugin;
+					$pro_recommend_plugins[] = (array)$plugin_data;
 				}//endelse
 			}//endelseif
-			
 		}//endforeach
 		
 		$free_active_count									= count($free_active_plugins);
@@ -105,9 +87,9 @@ class TSP_Easy_Plugins_Settings_Facepile extends TSP_Easy_Plugins_Settings
 		$pro_total											= $pro_active_count + $pro_installed_count + $pro_recommend_count;
 				
 		// Display settings to screen
-		$smarty = new TSP_Easy_Plugins_Smarty( $this->plugin_globals['smarty_template_dirs'], 
-			$this->plugin_globals['smarty_cache_dir'], 
-			$this->plugin_globals['smarty_compiled_dir'], true );
+		$smarty = new TSP_Easy_Plugins_Smarty( $this->settings['smarty_template_dirs'], 
+			$this->settings['smarty_cache_dir'], 
+			$this->settings['smarty_compiled_dir'], true );
 		$smarty->assign( 'free_active_count',		$free_active_count);
 		$smarty->assign( 'free_installed_count',	$free_installed_count);
 		$smarty->assign( 'free_recommend_count',	$free_recommend_count);
@@ -128,7 +110,7 @@ class TSP_Easy_Plugins_Settings_Facepile extends TSP_Easy_Plugins_Settings
 		$smarty->assign( 'pro_total',				$pro_total);
 
 		$smarty->assign( 'title',					"WordPress Plugins by The Software People");
-		$smarty->assign( 'contact_url',				$this->plugin_globals['contact_url']);
+		$smarty->assign( 'contact_url',				$this->settings['contact_url']);
 
 		$smarty->display( 'default_admin_menu.tpl');
 	}//end ad_menu
@@ -149,40 +131,40 @@ class TSP_Easy_Plugins_Settings_Facepile extends TSP_Easy_Plugins_Settings
 		$error = "";
 		
 		// get settings from database
-		$plugin_data = get_option( $this->plugin_globals['option_name'] );
+		$plugin_data = get_option( $this->settings['option_name'] );
 		$defaults = new TSP_Easy_Plugins_Data ( $plugin_data['widget_fields'] );
 
 		$form = null;
-		if ( array_key_exists( $this->plugin_globals['name'] . '_form_submit', $_REQUEST ))
+		if ( array_key_exists( $this->settings['name'] . '_form_submit', $_REQUEST ))
 		{
-			$form = $_REQUEST[ $this->plugin_globals['name'] . '_form_submit'];
+			$form = $_REQUEST[ $this->settings['name'] . '_form_submit'];
 		}//endif
 				
 		// Save data for settings page
-		if( isset( $form ) && check_admin_referer( $this->plugin_globals['name'], $this->plugin_globals['name'] . '_nonce_name' ) ) 
+		if( isset( $form ) && check_admin_referer( $this->settings['name'], $this->settings['name'] . '_nonce_name' ) ) 
 		{
 			$defaults->set_values( $_POST );
 			$plugin_data['widget_fields'] = $defaults->get();
 			
-			update_option( $this->plugin_globals['option_name'], $plugin_data );
+			update_option( $this->settings['option_name'], $plugin_data );
 			
-			$message = __( "Options saved.", $this->plugin_globals['name'] );
+			$message = __( "Options saved.", $this->settings['name'] );
 		}
 
 		$form_fields = $defaults->get_values( true );
 
 		// Display settings to screen
-		$smarty = new TSP_Easy_Plugins_Smarty( $this->plugin_globals['smarty_template_dirs'], 
-			$this->plugin_globals['smarty_cache_dir'], 
-			$this->plugin_globals['smarty_compiled_dir'], true );
+		$smarty = new TSP_Easy_Plugins_Smarty( $this->settings['smarty_template_dirs'], 
+			$this->settings['smarty_cache_dir'], 
+			$this->settings['smarty_compiled_dir'], true );
 		$smarty->assign( 'form_fields',				$form_fields);
 		$smarty->assign( 'message',					$message);
 		$smarty->assign( 'error',					$error);
 		$smarty->assign( 'form',					$form);
-		$smarty->assign( 'plugin_name',				$this->plugin_globals['name']);
-		$smarty->assign( 'nonce_name',				wp_nonce_field( $this->plugin_globals['name'], $this->plugin_globals['name'].'_nonce_name' ));
+		$smarty->assign( 'plugin_name',				$this->settings['name']);
+		$smarty->assign( 'nonce_name',				wp_nonce_field( $this->settings['name'], $this->settings['name'].'_nonce_name' ));
 		
-		$smarty->display( $this->plugin_globals['name'] . '_shortcode_settings.tpl');
+		$smarty->display( $this->settings['name'] . '_shortcode_settings.tpl');
 				
 	}//end settings_page
 	
@@ -211,7 +193,7 @@ class TSP_Easy_Plugins_Widget_Facepile extends TSP_Easy_Plugins_Widget
 	 */	
 	public function __construct() 
 	{
-		add_filter( 'TSP_Easy_Plugins_Widget_Facepile-init', array($this, 'init'), 10, 1 );
+		add_filter( get_class()  .'-init', array($this, 'init'), 10, 1 );
 	}//end __construct
 
 	
@@ -226,10 +208,10 @@ class TSP_Easy_Plugins_Widget_Facepile extends TSP_Easy_Plugins_Widget
 	 */
 	public function init( $globals )
 	{
-		$this->plugin_globals = $globals;
+		$this->settings = $globals;
 		
         // Create the widget
-		parent::__construct( $this->plugin_globals );
+		parent::__construct( $this->settings );
 	}
 
 	/**
@@ -252,9 +234,9 @@ class TSP_Easy_Plugins_Widget_Facepile extends TSP_Easy_Plugins_Widget
 			$fields[$key]['name'] 		= $this->get_field_name($key);
 		}//end foreach
 
-		$smarty = new TSP_Easy_Plugins_Smarty( $this->plugin_globals['smarty_template_dirs'], 
-			$this->plugin_globals['smarty_cache_dir'], 
-			$this->plugin_globals['smarty_compiled_dir'], true );
+		$smarty = new TSP_Easy_Plugins_Smarty( $this->settings['smarty_template_dirs'], 
+			$this->settings['smarty_cache_dir'], 
+			$this->settings['smarty_compiled_dir'], true );
     	
     	$smarty->assign( 'form_fields', $fields );
     	$smarty->assign( 'class', 'widefat' );
@@ -298,9 +280,9 @@ class TSP_Easy_Plugins_Widget_Facepile extends TSP_Easy_Plugins_Widget
 	
 		if (!empty($users))
 		{
-			$smarty = new TSP_Easy_Plugins_Smarty( $this->plugin_globals['smarty_template_dirs'], 
-				$this->plugin_globals['smarty_cache_dir'], 
-				$this->plugin_globals['smarty_compiled_dir'], true );
+			$smarty = new TSP_Easy_Plugins_Smarty( $this->settings['smarty_template_dirs'], 
+				$this->settings['smarty_cache_dir'], 
+				$this->settings['smarty_compiled_dir'], true );
 
 		    // Store values into Smarty
 		    foreach ($fields as $key => $val)
@@ -358,13 +340,13 @@ class TSP_Easy_Plugins_Widget_Facepile extends TSP_Easy_Plugins_Widget
 					$gravatar_type = get_option('wpu_gravatar_type');
 					$display_gravatar = get_avatar($email, $thumb_size, $gravatar_type, $name); //get avatar
 	
-					$smarty->assign("key", $this->plugin_globals['key'], true);
+					$smarty->assign("key", $this->settings['key'], true);
 					$smarty->assign("start_row", $start_row, true);
 					$smarty->assign("end_row", $end_row, true);
 					$smarty->assign("total_users", $total_users, true);
 					$smarty->assign("display_gravatar", $display_gravatar, true);
 					
-					$return_HTML .= $smarty->fetch( $this->plugin_globals['name'] . '_widget.tpl');
+					$return_HTML .= $smarty->fetch( $this->settings['name'] . '_widget.tpl');
 					
 					$start_row = false;
 	

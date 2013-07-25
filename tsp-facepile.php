@@ -36,14 +36,14 @@ if (!class_exists('TSP_Easy_Plugins'))
 	return;
 }//endif
 
-global $plugin_globals;
+global $easy_plugin_settings;
 
 require( TSPFCP_PLUGIN_PATH . 'tsp-easy-plugins.config.php');
 require( TSPFCP_PLUGIN_PATH . 'tsp-easy-plugins.extend.php');
 //--------------------------------------------------------
 // initialize the Facepile plugin
 //--------------------------------------------------------
-$facepile 								= new TSP_Easy_Plugins( $plugin_globals );
+$facepile 								= new TSP_Easy_Plugins( $easy_plugin_settings );
 
 $facepile->uses_smarty 					= true;
 
@@ -51,9 +51,9 @@ $facepile->uses_shortcodes 				= true;
 
 $facepile->required_wordpress_version 	= "3.5.1";
 
-$facepile->settings						= new TSP_Easy_Plugins_Settings_Facepile();
+$facepile->set_settings_handler( new TSP_Easy_Plugins_Settings_Facepile() );
 
-$facepile->widget_class					= 'TSP_Easy_Plugins_Widget_Facepile';
+$facepile->set_widget_handler( 'TSP_Easy_Plugins_Widget_Facepile' );
 
 $facepile->add_css( TSPFCP_PLUGIN_URL . TSPFCP_PLUGIN_NAME . '.css' );
 $facepile->add_css( TSPFCP_PLUGIN_URL . 'css' . DS. 'admin-style.css', true );
@@ -70,7 +70,7 @@ $facepile->run( __FILE__ );
 add_action('widgets_init', function () {
 	global $facepile;
 	
-	register_widget ( $facepile->widget_class ); 
-	apply_filters( $facepile->widget_class.'-init', $facepile->get_globals() );
+	register_widget ( $facepile->get_widget_handler() ); 
+	apply_filters( $facepile->get_widget_handler().'-init', $facepile->get_settings() );
 });
 ?>
