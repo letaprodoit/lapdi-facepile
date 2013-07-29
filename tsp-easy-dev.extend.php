@@ -1,7 +1,7 @@
 <?php				
 /**
- * TSP_Easy_Plugins_Settings_Facepile - Extends the TSP_Plugin_Settings Class
- * @package TSP_Easy_Plugins
+ * TSP_Easy_Dev_Settings_Facepile - Extends the TSP_Plugin_Settings Class
+ * @package TSP_Easy_Dev
  * @author sharrondenice, thesoftwarepeople
  * @author Sharron Denice, The Software People
  * @copyright 2013 The Software People
@@ -13,7 +13,7 @@
   * @method void display_parent_page()
   * @method void display_plugin_settings_page()
   */
-class TSP_Easy_Plugins_Settings_Facepile extends TSP_Easy_Plugins_Settings
+class TSP_Easy_Dev_Settings_Facepile extends TSP_Easy_Dev_Settings
 {
 	/**
 	 * Display all the plugins that The Software People has released
@@ -87,7 +87,7 @@ class TSP_Easy_Plugins_Settings_Facepile extends TSP_Easy_Plugins_Settings
 		$pro_total											= $pro_active_count + $pro_installed_count + $pro_recommend_count;
 				
 		// Display settings to screen
-		$smarty = new TSP_Easy_Plugins_Smarty( $this->settings['smarty_template_dirs'], 
+		$smarty = new TSP_Easy_Dev_Smarty( $this->settings['smarty_template_dirs'], 
 			$this->settings['smarty_cache_dir'], 
 			$this->settings['smarty_compiled_dir'], true );
 		$smarty->assign( 'free_active_count',		$free_active_count);
@@ -132,7 +132,7 @@ class TSP_Easy_Plugins_Settings_Facepile extends TSP_Easy_Plugins_Settings
 		
 		// get settings from database
 		$plugin_data = get_option( $this->settings['option_name'] );
-		$defaults = new TSP_Easy_Plugins_Data ( $plugin_data['widget_fields'] );
+		$defaults = new TSP_Easy_Dev_Data ( $plugin_data['widget_fields'] );
 
 		$form = null;
 		if ( array_key_exists( $this->settings['name'] . '_form_submit', $_REQUEST ))
@@ -154,7 +154,7 @@ class TSP_Easy_Plugins_Settings_Facepile extends TSP_Easy_Plugins_Settings
 		$form_fields = $defaults->get_values( true );
 
 		// Display settings to screen
-		$smarty = new TSP_Easy_Plugins_Smarty( $this->settings['smarty_template_dirs'], 
+		$smarty = new TSP_Easy_Dev_Smarty( $this->settings['smarty_template_dirs'], 
 			$this->settings['smarty_cache_dir'], 
 			$this->settings['smarty_compiled_dir'], true );
 		$smarty->assign( 'form_fields',				$form_fields);
@@ -168,11 +168,11 @@ class TSP_Easy_Plugins_Settings_Facepile extends TSP_Easy_Plugins_Settings
 				
 	}//end settings_page
 	
-}//end TSP_Easy_Plugins_Settings_View
+}//end TSP_Easy_Dev_Settings_View
 
 
 /**
- * TSP_Easy_Plugins_Widget_Facepile - Extends the TSP_Easy_Plugins_Widget Class
+ * TSP_Easy_Dev_Widget_Facepile - Extends the TSP_Easy_Dev_Widget Class
  * @package TSPEasyPlugin
  * @author sharrondenice, thesoftwarepeople
  * @author Sharron Denice, The Software People
@@ -182,11 +182,11 @@ class TSP_Easy_Plugins_Settings_Facepile extends TSP_Easy_Plugins_Settings
  */
 
 /**
- * Extends the TSP_Easy_Plugins_Widget_Facepile Class
+ * Extends the TSP_Easy_Dev_Widget_Facepile Class
  *
  * original author: Sharron Denice
  */
-class TSP_Easy_Plugins_Widget_Facepile extends TSP_Easy_Plugins_Widget
+class TSP_Easy_Dev_Widget_Facepile extends TSP_Easy_Dev_Widget
 {
 	/**
 	 * Constructor
@@ -234,7 +234,7 @@ class TSP_Easy_Plugins_Widget_Facepile extends TSP_Easy_Plugins_Widget
 			$fields[$key]['name'] 		= $this->get_field_name($key);
 		}//end foreach
 
-		$smarty = new TSP_Easy_Plugins_Smarty( $this->settings['smarty_template_dirs'], 
+		$smarty = new TSP_Easy_Dev_Smarty( $this->settings['smarty_template_dirs'], 
 			$this->settings['smarty_cache_dir'], 
 			$this->settings['smarty_compiled_dir'], true );
     	
@@ -280,7 +280,7 @@ class TSP_Easy_Plugins_Widget_Facepile extends TSP_Easy_Plugins_Widget
 	
 		if (!empty($users))
 		{
-			$smarty = new TSP_Easy_Plugins_Smarty( $this->settings['smarty_template_dirs'], 
+			$smarty = new TSP_Easy_Dev_Smarty( $this->settings['smarty_template_dirs'], 
 				$this->settings['smarty_cache_dir'], 
 				$this->settings['smarty_compiled_dir'], true );
 
@@ -360,5 +360,5 @@ class TSP_Easy_Plugins_Widget_Facepile extends TSP_Easy_Plugins_Widget
 		
 		return $return_HTML;
 	}//end display
-}//end TSP_Easy_Plugins_Widget_Facepile
+}//end TSP_Easy_Dev_Widget_Facepile
 ?>

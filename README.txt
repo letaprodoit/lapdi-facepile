@@ -55,7 +55,7 @@ In CSS the attribute to add settings for is `tspfcp_wp_user_table_cell`. Sample 
 == Changelog ==
 
 = 1.1.0 =
-* Now uses Easy Plugins for easy plugin modification, embracing OOD
+* Now uses Easy Dev for easy plugin modification, embracing OOD
 
 = 1.0.1 =
 * Checks for existence of parent settings menu before overwriting it
@@ -66,7 +66,7 @@ In CSS the attribute to add settings for is `tspfcp_wp_user_table_cell`. Sample 
 == Upgrade notice ==
 
 = 1.1.0 =
-Plugin now requires TSP Easy Plugins.
+Plugin now requires TSP Easy Dev.
 
 = 1.0.1 =
 Menu fix.

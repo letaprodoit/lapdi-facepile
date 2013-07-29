@@ -19,11 +19,11 @@ define('TSPFCP_PLUGIN_URL', 				plugin_dir_url( __FILE__ ) );
 define('TSPFCP_PLUGIN_NAME', 				'tsp-facepile');
 define('TSPFCP_PLUGIN_TITLE', 				'TSP Facepile');
 
-if (!class_exists('TSP_Easy_Plugins'))
+if (!class_exists('TSP_Easy_Dev'))
 {
 	add_action( 'admin_notices', function (){
 		
-		$message = TSPFCP_PLUGIN_TITLE . ' <strong>was not installed</strong>, plugin requires the installation and activation of <a href="plugin-install.php?tab=search&type=term&s=TSP+Easy+Plugins">TSP Easy Plugins</a> or <a href="plugin-install.php?tab=search&type=term&s=TSP+Easy+Plugins+Pro">TSP Easy Plugins Pro</a>.';
+		$message = TSPFCP_PLUGIN_TITLE . ' <strong>was not installed</strong>, plugin requires the installation and activation of <a href="plugin-install.php?tab=search&type=term&s=TSP+Easy+Plugins">TSP Easy Dev</a> or <a href="plugin-install.php?tab=search&type=term&s=TSP+Easy+Plugins+Pro">TSP Easy Dev Pro</a>.';
 	    ?>
 	    <div class="error">
 	        <p><?php echo $message; ?></p>
@@ -36,14 +36,14 @@ if (!class_exists('TSP_Easy_Plugins'))
 	return;
 }//endif
 
-global $easy_plugin_settings;
+global $easy_dev_settings;
 
-require( TSPFCP_PLUGIN_PATH . 'tsp-easy-plugins.config.php');
-require( TSPFCP_PLUGIN_PATH . 'tsp-easy-plugins.extend.php');
+require( TSPFCP_PLUGIN_PATH . 'tsp-easy-dev.config.php');
+require( TSPFCP_PLUGIN_PATH . 'tsp-easy-dev.extend.php');
 //--------------------------------------------------------
 // initialize the Facepile plugin
 //--------------------------------------------------------
-$facepile 								= new TSP_Easy_Plugins( $easy_plugin_settings );
+$facepile 								= new TSP_Easy_Dev( $easy_dev_settings );
 
 $facepile->uses_smarty 					= true;
 
@@ -51,13 +51,13 @@ $facepile->uses_shortcodes 				= true;
 
 $facepile->required_wordpress_version 	= "3.5.1";
 
-$facepile->set_settings_handler( new TSP_Easy_Plugins_Settings_Facepile() );
+$facepile->set_settings_handler( new TSP_Easy_Dev_Settings_Facepile() );
 
-$facepile->set_widget_handler( 'TSP_Easy_Plugins_Widget_Facepile' );
+$facepile->set_widget_handler( 'TSP_Easy_Dev_Widget_Facepile' );
 
 $facepile->add_css( TSPFCP_PLUGIN_URL . TSPFCP_PLUGIN_NAME . '.css' );
 $facepile->add_css( TSPFCP_PLUGIN_URL . 'css' . DS. 'admin-style.css', true );
-$facepile->add_css( TSP_EASY_PLUGINS_ASSETS_CSS_URL . 'style.css', true );
+$facepile->add_css( TSP_EASY_DEV_ASSETS_CSS_URL . 'style.css', true );
 
 $facepile->set_plugin_icon( TSPFCP_PLUGIN_URL . 'images' . DS . 'tsp_icon_16.png' );
 
