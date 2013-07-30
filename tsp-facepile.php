@@ -18,7 +18,7 @@ define('TSPFCP_PLUGIN_PATH',				plugin_dir_path( __FILE__ ) );
 define('TSPFCP_PLUGIN_URL', 				plugin_dir_url( __FILE__ ) );
 define('TSPFCP_PLUGIN_NAME', 				'tsp-facepile');
 define('TSPFCP_PLUGIN_TITLE', 				'TSP Facepile');
-define('TSPFCP_REQ_VERSION', 				"3.5.1");
+define('TSPFCP_PLUGIN_REQ_VERSION', 		"3.5.1");
 define('TSPFCP_PLUGIN_BASE_NAME', 			TSPFCP_PLUGIN_NAME . '/'. TSPFCP_PLUGIN_NAME . '.php' );
 
 if (!class_exists('TSP_Easy_Dev'))
@@ -45,7 +45,7 @@ require( TSPFCP_PLUGIN_PATH . 'tsp-easy-dev.extend.php');
 //--------------------------------------------------------
 // initialize the Facepile plugin
 //--------------------------------------------------------
-$facepile 								= new TSP_Easy_Dev( __FILE__, TSPFCP_REQ_VERSION );
+$facepile 								= new TSP_Easy_Dev( __FILE__, TSPFCP_PLUGIN_REQ_VERSION );
 
 $facepile->set_options_handler( new TSP_Easy_Dev_Options_Facepile( $easy_dev_settings ) );
 
@@ -54,8 +54,6 @@ $facepile->set_widget_handler( 'TSP_Easy_Dev_Widget_Facepile' );
 $facepile->uses_smarty 					= true;
 
 $facepile->uses_shortcodes 				= true;
-
-$facepile->required_wordpress_version 	= "3.5.1";
 
 $facepile->add_css( TSPFCP_PLUGIN_URL . TSPFCP_PLUGIN_NAME . '.css' );
 $facepile->add_css( TSPFCP_PLUGIN_URL . 'css' . DS. 'admin-style.css', true );
