@@ -5,9 +5,11 @@ if ( !defined( 'TSP_PARENT_TITLE' )) define('TSP_PARENT_TITLE', 		'TSP Plugins')
 if ( !defined( 'TSP_PARENT_MENU_POS' )) define('TSP_PARENT_MENU_POS', 	2617638);
 /* @end */
 
-// Get the plugin path
-if (!defined('WP_CONTENT_DIR')) define('WP_CONTENT_DIR', ABSPATH . 'wp-content');
-
+/**
+* Every plugin that uses Easy Dev must define the DS variable that sets the path deliminter
+*
+* @var string
+*/
 if (!defined('DS')) {
     if (strpos(php_uname('s') , 'Win') !== false) define('DS', '\\');
     else define('DS', '/');
@@ -23,13 +25,14 @@ $easy_dev_settings['key'] 					= $easy_dev_settings['TextDomain'];
 $easy_dev_settings['title']					= $easy_dev_settings['Name'];
 $easy_dev_settings['title_short']			= $easy_dev_settings['Name'];
 
-$easy_dev_settings['option_name']			= TSPFCP_PLUGIN_NAME . "-option";
-$easy_dev_settings['option_name_old']		= $easy_dev_settings['TextDomain']."_options";
+$easy_dev_settings['option_prefix']			= TSPFCP_PLUGIN_NAME . "-option";
+$easy_dev_settings['option_prefix_old']		= $easy_dev_settings['TextDomain']."_options";
 
 $easy_dev_settings['file']	 				= TSPFCP_PLUGIN_FILE;
+$easy_dev_settings['base_name']	 			= TSPFCP_PLUGIN_BASE_NAME;
 
 $easy_dev_settings['widget_width']	 		= 300;
-$easy_dev_settings['widget_height'] 			= 350;
+$easy_dev_settings['widget_height'] 		= 350;
 
 $easy_dev_settings['smarty_template_dirs']	= array( TSPFCP_PLUGIN_PATH . 'templates', TSP_EASY_DEV_ASSETS_TEMPLATES_PATH );
 $easy_dev_settings['smarty_compiled_dir']  	= TSP_EASY_DEV_TMP_PATH . TSPFCP_PLUGIN_NAME . DS . 'compiled';
@@ -43,7 +46,7 @@ $easy_dev_settings['contact_url'] 			= 'http://www.thesoftwarepeople.com/about-u
 $easy_dev_settings['plugin_list']			= 'http://www.thesoftwarepeople.com/plugins/wordpress/plugins.json';
 //* Custom globals *//
 
-$easy_dev_settings['plugin_data']			= array(
+$easy_dev_settings['plugin_options']		= array(
 	'widget_fields'						=> array(
 		'title' 		=> array( 
 			'type' 			=> 'INPUT', 
@@ -97,4 +100,6 @@ $easy_dev_settings['plugin_data']			= array(
 		)
 	),		
 );
+
+$easy_dev_settings['plugin_options']['settings_fields'] = $easy_dev_settings['plugin_options']['widget_fields'];		
 ?>

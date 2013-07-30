@@ -1,6 +1,6 @@
 <?php				
 /**
- * TSP_Easy_Dev_Settings_Facepile - Extends the TSP_Plugin_Settings Class
+ * TSP_Easy_Dev_Options_Facepile - Extends the TSP_Plugin_Settings Class
  * @package TSP_Easy_Dev
  * @author sharrondenice, thesoftwarepeople
  * @author Sharron Denice, The Software People
@@ -13,7 +13,7 @@
   * @method void display_parent_page()
   * @method void display_plugin_settings_page()
   */
-class TSP_Easy_Dev_Settings_Facepile extends TSP_Easy_Dev_Settings
+class TSP_Easy_Dev_Options_Facepile extends TSP_Easy_Dev_Options
 {
 	/**
 	 * Display all the plugins that The Software People has released
@@ -37,7 +37,7 @@ class TSP_Easy_Dev_Settings_Facepile extends TSP_Easy_Dev_Settings
 		$pro_installed_plugins 	= array();
 		$pro_recommend_plugins 	= array();
 		
-		$json 					= file_get_contents( $this->settings['plugin_list'] );
+		$json 					= file_get_contents( $this->get_value('plugin_list') );
 		$tsp_plugins 			= json_decode($json);
 		
 		foreach ( $tsp_plugins->{'plugins'} as $plugin_data )
@@ -87,9 +87,10 @@ class TSP_Easy_Dev_Settings_Facepile extends TSP_Easy_Dev_Settings
 		$pro_total											= $pro_active_count + $pro_installed_count + $pro_recommend_count;
 				
 		// Display settings to screen
-		$smarty = new TSP_Easy_Dev_Smarty( $this->settings['smarty_template_dirs'], 
-			$this->settings['smarty_cache_dir'], 
-			$this->settings['smarty_compiled_dir'], true );
+		$smarty = new TSP_Easy_Dev_Smarty( $this->get_value('smarty_template_dirs'), 
+			$this->get_value('smarty_cache_dir'), 
+			$this->get_value('smarty_compiled_dir'), true );
+			
 		$smarty->assign( 'free_active_count',		$free_active_count);
 		$smarty->assign( 'free_installed_count',	$free_installed_count);
 		$smarty->assign( 'free_recommend_count',	$free_recommend_count);
@@ -110,7 +111,7 @@ class TSP_Easy_Dev_Settings_Facepile extends TSP_Easy_Dev_Settings
 		$smarty->assign( 'pro_total',				$pro_total);
 
 		$smarty->assign( 'title',					"WordPress Plugins by The Software People");
-		$smarty->assign( 'contact_url',				$this->settings['contact_url']);
+		$smarty->assign( 'contact_url',				$this->get_value('contact_url'));
 
 		$smarty->display( 'default_admin_menu.tpl');
 	}//end ad_menu
@@ -131,44 +132,46 @@ class TSP_Easy_Dev_Settings_Facepile extends TSP_Easy_Dev_Settings
 		$error = "";
 		
 		// get settings from database
-		$plugin_data = get_option( $this->settings['option_name'] );
-		$defaults = new TSP_Easy_Dev_Data ( $plugin_data['widget_fields'] );
+		$settings_fields = get_option( $this->get_value('settings-fields-option-name') );
+		
+		$defaults = new TSP_Easy_Dev_Data ( $settings_fields );
 
 		$form = null;
-		if ( array_key_exists( $this->settings['name'] . '_form_submit', $_REQUEST ))
+		if ( array_key_exists( $this->get_value('name') . '_form_submit', $_REQUEST ))
 		{
-			$form = $_REQUEST[ $this->settings['name'] . '_form_submit'];
+			$form = $_REQUEST[ $this->get_value('name') . '_form_submit'];
 		}//endif
 				
 		// Save data for settings page
-		if( isset( $form ) && check_admin_referer( $this->settings['name'], $this->settings['name'] . '_nonce_name' ) ) 
+		if( isset( $form ) && check_admin_referer( $this->get_value('name'), $this->get_value('name') . '_nonce_name' ) ) 
 		{
 			$defaults->set_values( $_POST );
-			$plugin_data['widget_fields'] = $defaults->get();
+			$settings_fields = $defaults->get();
 			
-			update_option( $this->settings['option_name'], $plugin_data );
+			update_option( $this->get_value('settings-fields-option-name'), $settings_fields );
 			
-			$message = __( "Options saved.", $this->settings['name'] );
+			$message = __( "Options saved.", $this->get_value('name') );
 		}
-
+		
 		$form_fields = $defaults->get_values( true );
 
 		// Display settings to screen
-		$smarty = new TSP_Easy_Dev_Smarty( $this->settings['smarty_template_dirs'], 
-			$this->settings['smarty_cache_dir'], 
-			$this->settings['smarty_compiled_dir'], true );
+		$smarty = new TSP_Easy_Dev_Smarty( $this->get_value('smarty_template_dirs'), 
+			$this->get_value('smarty_cache_dir'), 
+			$this->get_value('smarty_compiled_dir'), true );
+
 		$smarty->assign( 'form_fields',				$form_fields);
 		$smarty->assign( 'message',					$message);
 		$smarty->assign( 'error',					$error);
 		$smarty->assign( 'form',					$form);
-		$smarty->assign( 'plugin_name',				$this->settings['name']);
-		$smarty->assign( 'nonce_name',				wp_nonce_field( $this->settings['name'], $this->settings['name'].'_nonce_name' ));
+		$smarty->assign( 'plugin_name',				$this->get_value('name'));
+		$smarty->assign( 'nonce_name',				wp_nonce_field( $this->get_value('name'), $this->get_value('name').'_nonce_name' ));
 		
-		$smarty->display( $this->settings['name'] . '_shortcode_settings.tpl');
+		$smarty->display( $this->get_value('name') . '_shortcode_settings.tpl');
 				
 	}//end settings_page
 	
-}//end TSP_Easy_Dev_Settings_View
+}//end TSP_Easy_Dev_Options_View
 
 
 /**
@@ -196,23 +199,20 @@ class TSP_Easy_Dev_Widget_Facepile extends TSP_Easy_Dev_Widget
 		add_filter( get_class()  .'-init', array($this, 'init'), 10, 1 );
 	}//end __construct
 
-	
 	/**
 	 * Function added to filter to allow initialization of widget
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param array $globals Required - array of global variables
+	 * @param object $options Required - pass in reference to options class
 	 *
 	 * @return none
 	 */
-	public function init( $globals )
+	public function init( $options )
 	{
-		$this->settings = $globals;
-		
         // Create the widget
-		parent::__construct( $this->settings );
-	}
+		parent::__construct( $options );
+	}//end init
 
 	/**
 	 * Override required of form function to display widget information
@@ -234,9 +234,9 @@ class TSP_Easy_Dev_Widget_Facepile extends TSP_Easy_Dev_Widget
 			$fields[$key]['name'] 		= $this->get_field_name($key);
 		}//end foreach
 
-		$smarty = new TSP_Easy_Dev_Smarty( $this->settings['smarty_template_dirs'], 
-			$this->settings['smarty_cache_dir'], 
-			$this->settings['smarty_compiled_dir'], true );
+		$smarty = new TSP_Easy_Dev_Smarty( $this->options->get_value('smarty_template_dirs'), 
+			$this->options->get_value('smarty_cache_dir'), 
+			$this->options->get_value('smarty_compiled_dir'), true );
     	
     	$smarty->assign( 'form_fields', $fields );
     	$smarty->assign( 'class', 'widefat' );
@@ -280,9 +280,9 @@ class TSP_Easy_Dev_Widget_Facepile extends TSP_Easy_Dev_Widget
 	
 		if (!empty($users))
 		{
-			$smarty = new TSP_Easy_Dev_Smarty( $this->settings['smarty_template_dirs'], 
-				$this->settings['smarty_cache_dir'], 
-				$this->settings['smarty_compiled_dir'], true );
+			$smarty = new TSP_Easy_Dev_Smarty( $this->options->get_value('smarty_template_dirs'), 
+				$this->options->get_value('smarty_cache_dir'), 
+				$this->options->get_value('smarty_compiled_dir'), true );
 
 		    // Store values into Smarty
 		    foreach ($fields as $key => $val)
@@ -340,13 +340,13 @@ class TSP_Easy_Dev_Widget_Facepile extends TSP_Easy_Dev_Widget
 					$gravatar_type = get_option('wpu_gravatar_type');
 					$display_gravatar = get_avatar($email, $thumb_size, $gravatar_type, $name); //get avatar
 	
-					$smarty->assign("key", $this->settings['key'], true);
+					$smarty->assign("key", $this->options->get_value('key'), true);
 					$smarty->assign("start_row", $start_row, true);
 					$smarty->assign("end_row", $end_row, true);
 					$smarty->assign("total_users", $total_users, true);
 					$smarty->assign("display_gravatar", $display_gravatar, true);
 					
-					$return_HTML .= $smarty->fetch( $this->settings['name'] . '_widget.tpl');
+					$return_HTML .= $smarty->fetch( $this->options->get_value('name') . '_widget.tpl');
 					
 					$start_row = false;
 	
