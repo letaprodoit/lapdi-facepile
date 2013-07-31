@@ -132,9 +132,9 @@ class TSP_Easy_Dev_Options_Facepile extends TSP_Easy_Dev_Options
 		$error = "";
 		
 		// get settings from database
-		$settings_fields = get_option( $this->get_value('settings-fields-option-name') );
+		$shortcode_fields = get_option( $this->get_value('shortcode-fields-option-name') );
 		
-		$defaults = new TSP_Easy_Dev_Data ( $settings_fields );
+		$defaults = new TSP_Easy_Dev_Data ( $shortcode_fields );
 
 		$form = null;
 		if ( array_key_exists( $this->get_value('name') . '_form_submit', $_REQUEST ))
@@ -146,9 +146,9 @@ class TSP_Easy_Dev_Options_Facepile extends TSP_Easy_Dev_Options
 		if( isset( $form ) && check_admin_referer( $this->get_value('name'), $this->get_value('name') . '_nonce_name' ) ) 
 		{
 			$defaults->set_values( $_POST );
-			$settings_fields = $defaults->get();
+			$shortcode_fields = $defaults->get();
 			
-			update_option( $this->get_value('settings-fields-option-name'), $settings_fields );
+			update_option( $this->get_value('shortcode-fields-option-name'), $shortcode_fields );
 			
 			$message = __( "Options saved.", $this->get_value('name') );
 		}

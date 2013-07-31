@@ -3,7 +3,7 @@ Contributors: thesoftwarepeople,sharrondenice
 Donate link: http://www.thesoftwarepeople.com/software/plugins/wordpress/facepile-for-wordpress.html
 Tags: display, faces, tiles, members, list, grid, the software people
 Requires at least: 3.5.1
-Tested up to: 3.5.2
+Tested up to: 3.5.6
 Stable tag: 1.1.0
 License: Apache v2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0
@@ -55,7 +55,7 @@ In CSS the attribute to add settings for is `tspfcp_wp_user_table_cell`. Sample 
 == Changelog ==
 
 = 1.1.0 =
-* Now uses Easy Dev for easy plugin modification, embracing OOD
+* Now uses Easy Dev for easy plugin development, #embraceOOD
 
 = 1.0.1 =
 * Checks for existence of parent settings menu before overwriting it
