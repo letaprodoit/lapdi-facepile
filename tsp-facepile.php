@@ -45,7 +45,7 @@ require( TSPFCP_PLUGIN_PATH . 'TSP_Easy_Dev.extend.php');
 //--------------------------------------------------------
 // initialize the Facepile plugin
 //--------------------------------------------------------
-$facepile 								= new TSP_Easy_Dev( __FILE__, TSPFCP_PLUGIN_REQ_VERSION );
+$facepile 								= new TSP_Easy_Dev( TSPFCP_PLUGIN_FILE, TSPFCP_PLUGIN_REQ_VERSION );
 
 $facepile->set_options_handler( new TSP_Easy_Dev_Options_Facepile( $easy_dev_settings ) );
 
@@ -64,7 +64,7 @@ $facepile->set_plugin_icon( TSPFCP_PLUGIN_URL . 'images' . DS . 'tsp_icon_16.png
 $facepile->add_shortcode ( TSPFCP_PLUGIN_NAME );
 $facepile->add_shortcode ( 'tsp_facepile' ); //backwards compatibility
 
-$facepile->run( __FILE__ );
+$facepile->run( TSPFCP_PLUGIN_FILE );
 
 // Initialize widget - Required by WordPress
 add_action('widgets_init', function () {
