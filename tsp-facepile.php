@@ -60,6 +60,10 @@ $facepile->set_options_handler( new TSP_Easy_Dev_Options_Facepile( $easy_dev_set
 
 $facepile->set_widget_handler( 'TSP_Easy_Dev_Widget_Facepile' );
 
+$facepile->add_link ( 'FAQ', 			'http://wordpress.org/extend/plugins/tsp-facepile/faq/' );
+$facepile->add_link ( 'Rate Me', 		'http://wordpress.org/support/view/plugin-reviews/tsp-facepile' );
+$facepile->add_link ( 'Support', 		'http://wordpress.org/support/plugin/tsp-facepile' );
+
 $facepile->uses_smarty 					= true;
 
 $facepile->uses_shortcodes 				= true;
