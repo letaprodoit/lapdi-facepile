@@ -10,7 +10,7 @@
 					<ul style="padding-left: 30px;">
 						<li>Title: <strong>title="Title of Posts"</strong></li>
 						<li>Show Names: <strong>show_names="Y"</strong>(Options: Y, N)</li>
-						<li>Show Member Count: <strong>member_count="Y"</strong>(Options: Y, N)</li>
+						<li>Show Member Count: <strong>show_count="Y"</strong>(Options: Y, N)</li>
 						<li>Number of Rows: <strong>num_rows="4"</strong></li>
 						<li>Number of Columns: <strong>num_cols="4"</strong></li>
 						<li>Thumbnail Width: <strong>thumb_width="80"</strong></li>
@@ -23,7 +23,7 @@
 			</ul>
 			<hr>
 			A shortcode with all the options will look like the following:<br><br>
-			<strong>[tsp-facepile title="Facepile" show_names="Y" member_count="N" num_rows="4" num_cols="4" thumb_width="80" thumb_height="80" before_title="" after_title=""]</strong>
+			<strong>[tsp-facepile title="Facepile" show_names="Y" show_count="N" num_rows="4" num_cols="4" thumb_width="80" thumb_height="80" before_title="" after_title=""]</strong>
 		</div>
 	
 	</div>
