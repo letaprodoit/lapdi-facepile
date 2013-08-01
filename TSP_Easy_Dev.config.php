@@ -56,7 +56,7 @@ $easy_dev_settings['plugin_options']		= array(
 		'show_names' 	=> array( 
 			'type' 			=> 'SELECT', 
 			'label' 		=> 'Display user names?', 
-			'value' 		=> 'Y',
+			'value' 		=> 'N',
 			'options'		=> array ('Yes' => 'Y', 'No' => 'N'),
 			'old_labels'	=> array ('shownames'),
 		),		
