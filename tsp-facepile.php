@@ -21,9 +21,9 @@ define('TSPFCP_PLUGIN_NAME', 				'tsp-facepile');
 define('TSPFCP_PLUGIN_TITLE', 				'TSP Facepile');
 define('TSPFCP_PLUGIN_REQ_VERSION', 		"3.5.1");
 
-// If either of the plugins exist then inlude the register script to register all the classes
-// else deactivaet this plugin and do not allow installation
-if ( !file_exists ( WP_PLUGIN_DIR . "/tsp-easy-dev/TSP_Easy_Dev.register.php" ) && !file_exists( WP_PLUGIN_DIR . "/tsp-easy-dev-pro/TSP_Easy_Dev.register.php" ) )
+// The recommended option would be to require the installation of the standard version and
+// bundle the Pro classes into your plugin if needed
+if ( !file_exists ( WP_PLUGIN_DIR . "/tsp-easy-dev/TSP_Easy_Dev.register.php" ) )
 {
 	add_action( 'admin_notices', function (){
 		
@@ -41,11 +41,7 @@ if ( !file_exists ( WP_PLUGIN_DIR . "/tsp-easy-dev/TSP_Easy_Dev.register.php" ) 
 }//endif
 else
 {
-    if (file_exists( WP_PLUGIN_DIR . "/tsp-easy-dev-pro/TSP_Easy_Dev.register.php" ))
-    {
-    	include_once WP_PLUGIN_DIR . "/tsp-easy-dev-pro/TSP_Easy_Dev.register.php";
-    }//end if
-    elseif (file_exists( WP_PLUGIN_DIR . "/tsp-easy-dev/TSP_Easy_Dev.register.php" ))
+    if (file_exists( WP_PLUGIN_DIR . "/tsp-easy-dev/TSP_Easy_Dev.register.php" ))
     {
     	include_once WP_PLUGIN_DIR . "/tsp-easy-dev/TSP_Easy_Dev.register.php";
     }//end else
