@@ -2,7 +2,7 @@
 /*
 Plugin Name: 	TSP Facepile
 Plugin URI: 	http://www.thesoftwarepeople.com/software/plugins/wordpress/facepile-for-wordpress.html
-Description: 	Facepile allows you to add WordPress users photo icons to your blog's website in grid format.
+Description: 	Facepile allows you to <strong>add user photo icons to your blog</strong>'s website in grid format. Powered by <strong><a href="http://wordpress.org/plugins/tsp-easy-dev/">TSP Easy Dev</a></strong>.
 Author: 		The Software People
 Author URI: 	http://www.thesoftwarepeople.com/
 Version: 		1.1.0
@@ -52,7 +52,7 @@ global $easy_dev_settings;
 require( TSPFCP_PLUGIN_PATH . 'TSP_Easy_Dev.config.php');
 require( TSPFCP_PLUGIN_PATH . 'TSP_Easy_Dev.extend.php');
 //--------------------------------------------------------
-// initialize the Facepile plugin
+// initialize the plugin
 //--------------------------------------------------------
 $facepile 								= new TSP_Easy_Dev( TSPFCP_PLUGIN_FILE, TSPFCP_PLUGIN_REQ_VERSION );
 
