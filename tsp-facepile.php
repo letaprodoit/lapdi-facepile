@@ -27,7 +27,7 @@ if ( !file_exists ( WP_PLUGIN_DIR . "/tsp-easy-dev/TSP_Easy_Dev.register.php" ) 
 {
 	add_action( 'admin_notices', function (){
 		
-		$message = TSPFCP_PLUGIN_TITLE . ' <strong>was not installed</strong>, plugin requires the installation and activation of <strong><a href="plugin-install.php?tab=search&type=term&s=TSP+Easy+Dev">TSP Easy Dev</a></strong> or <strong><a href="plugin-install.php?tab=search&type=term&s=TSP+Easy+Dev+Pro">TSP Easy Dev Pro</a></strong>.';
+		$message = TSPFCP_PLUGIN_TITLE . ' <strong>was not installed</strong>, plugin requires the installation of <strong><a href="plugin-install.php?tab=search&type=term&s=TSP+Easy+Dev">TSP Easy Dev</a></strong>.';
 	    ?>
 	    <div class="error">
 	        <p><?php echo $message; ?></p>

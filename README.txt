@@ -56,6 +56,9 @@ In CSS the attribute to add settings for is `tspfcp_wp_user_table_cell`. Sample 
 
 = 1.1.0 =
 * Now uses Easy Dev for easy plugin development, #embraceOOD
+* Handled all PHP notices
+* Added new attribute show_count (hide/show the member count)
+* Decreased plugin size by using Easy Dev
 
 = 1.0.1 =
 * Checks for existence of parent settings menu before overwriting it
@@ -66,7 +69,7 @@ In CSS the attribute to add settings for is `tspfcp_wp_user_table_cell`. Sample 
 == Upgrade notice ==
 
 = 1.1.0 =
-Plugin now requires TSP Easy Dev.
+Plugin now requires TSP Easy Dev. New features.
 
 = 1.0.1 =
 Menu fix.
