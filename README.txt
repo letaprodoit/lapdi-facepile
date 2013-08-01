@@ -58,6 +58,7 @@ In CSS the attribute to add settings for is `tspfcp_wp_user_table_cell`. Sample 
 * Now uses Easy Dev for easy plugin development, #embraceOOD
 * Handled all PHP notices
 * Added new attribute show_count (hide/show the member count)
+* Renamed attributes to prevent red spell checks when editing (old attributes still supported)
 * Decreased plugin size by using Easy Dev
 
 = 1.0.1 =
