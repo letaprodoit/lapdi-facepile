@@ -4,7 +4,7 @@ Donate link: http://www.thesoftwarepeople.com/software/plugins/wordpress/facepil
 Tags: display, faces, tiles, members, list, grid, the software people
 Requires at least: 3.5.1
 Tested up to: 3.6
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: Apache v2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0
 
@@ -54,6 +54,9 @@ In CSS the attribute to add settings for is `tspfcp_wp_user_table_cell`. Sample 
 
 == Changelog ==
 
+= 1.1.2 =
+* Updated admin_notices hooks to not use inline functions.
+
 = 1.1.1 =
 * No longer required to set the id and name in display_form (See TSP Easy Dev Change Log Version 1.2)
 
@@ -71,6 +74,9 @@ In CSS the attribute to add settings for is `tspfcp_wp_user_table_cell`. Sample 
 * Launch
 
 == Upgrade notice ==
+
+= 1.1.2 =
+Maintenance fix.
 
 = 1.1.1 =
 Maintenance fix. Requires update to TSP Easy Dev 1.2

@@ -5,7 +5,7 @@ Plugin URI: 	http://www.thesoftwarepeople.com/software/plugins/wordpress/facepil
 Description: 	Facepile allows you to <strong>add user photo icons to your blog</strong>'s website in grid format. Powered by <strong><a href="http://wordpress.org/plugins/tsp-easy-dev/">TSP Easy Dev</a></strong>.
 Author: 		The Software People
 Author URI: 	http://www.thesoftwarepeople.com/
-Version: 		1.1.1
+Version: 		1.1.2
 Text Domain: 	tspfcp
 Copyright: 		Copyright © 2013 The Software People, LLC (www.thesoftwarepeople.com). All rights reserved
 License: 		APACHE v2.0 (http://www.apache.org/licenses/LICENSE-2.0)
@@ -25,18 +25,18 @@ define('TSPFCP_PLUGIN_REQ_VERSION', 		"3.5.1");
 // bundle the Pro classes into your plugin if needed
 if ( !file_exists ( WP_PLUGIN_DIR . "/tsp-easy-dev/TSP_Easy_Dev.register.php" ) )
 {
-	add_action( 'admin_notices', function (){
-		
+	function display_tspfcp_notice()
+	{
 		$message = TSPFCP_PLUGIN_TITLE . ' <strong>was not installed</strong>, plugin requires the installation of <strong><a href="plugin-install.php?tab=search&type=term&s=TSP+Easy+Dev">TSP Easy Dev</a></strong>.';
 	    ?>
 	    <div class="error">
 	        <p><?php echo $message; ?></p>
 	    </div>
 	    <?php
-	} );
-	
+	}//end display_tspfcp_notice
+
+	add_action( 'admin_notices', 'display_tspfcp_notice' );
 	deactivate_plugins( TSPFCP_PLUGIN_BASE_NAME );
-	
 	return;
 }//endif
 else
