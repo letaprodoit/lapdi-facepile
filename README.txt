@@ -73,7 +73,7 @@ In CSS the attribute to add settings for is `tspfcp_wp_user_table_cell`. Sample 
 == Upgrade notice ==
 
 = 1.1.1 =
-Maintenance fix.
+Maintenance fix. Requires update to TSP Easy Dev 1.2
 
 = 1.1.0 =
 Plugin now requires TSP Easy Dev. New features.
