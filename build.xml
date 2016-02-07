@@ -2,7 +2,7 @@
 <project name="TSP Facepile" default="copy_all" basedir=".">
     <property name="name"  value="tsp-facepile" />
     <property name="test_site"  value="/Users/SharronDenice/Sites/_testsites/wordpress_latest/wp-content/plugins/${name}" />
-    <property name="live_site"  value="/Users/SharronDenice/Sites/www.sharrondenice.com/wp-content/plugins/${name}" />
+    <property name="live_site"  value="/Users/SharronDenice/Sites/portal.hpawebservices.com/wp-content/plugins/${name}" />
  
     <!-- Fileset for all files -->
     <fileset dir="${project.basedir}" id="allfiles">

@@ -5,9 +5,9 @@ Plugin URI: 	http://www.thesoftwarepeople.com/software/plugins/wordpress/facepil
 Description: 	Facepile allows you to <strong>add user photo icons to your blog</strong>'s website in grid format. Powered by <strong><a href="http://wordpress.org/plugins/tsp-easy-dev/">TSP Easy Dev</a></strong>.
 Author: 		The Software People
 Author URI: 	http://www.thesoftwarepeople.com/
-Version: 		1.1.3
+Version: 		1.1.4
 Text Domain: 	tspfcp
-Copyright: 		Copyright © 2013 The Software People, LLC (www.thesoftwarepeople.com). All rights reserved
+Copyright: 		Copyright ï¿½ 2013 The Software People, LLC (www.thesoftwarepeople.com). All rights reserved
 License: 		APACHE v2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 */
 
@@ -68,8 +68,15 @@ $facepile->uses_smarty 					= true;
 
 $facepile->uses_shortcodes 				= true;
 
+// Queue User styles
 $facepile->add_css( TSPFCP_PLUGIN_URL . TSPFCP_PLUGIN_NAME . '.css' );
-$facepile->add_css( TSPFCP_PLUGIN_URL . 'css' . DS. 'admin-style.css', true );
+
+// Queue Admin Scripts
+$facepile->add_script( TSP_EASY_DEV_ASSETS_JS_URL . 'admin-script.js',  array('jquery','jquery-ui-tabs'), true );
+
+// Queue Admin styles
+$facepile->add_css( TSP_EASY_DEV_ASSETS_CSS_URL . 'font-awesome.min.css', true );
+$facepile->add_css( TSP_EASY_DEV_ASSETS_CSS_URL . 'admin-style.css', true );
 $facepile->add_css( TSP_EASY_DEV_ASSETS_CSS_URL . 'style.css', true );
 
 $facepile->set_plugin_icon( TSPFCP_PLUGIN_URL . 'images' . DS . 'tsp_icon_16.png' );

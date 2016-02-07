@@ -134,7 +134,7 @@ class TSP_Easy_Dev_Options_Facepile extends TSP_Easy_Dev_Options
 		// get settings from database
 		$shortcode_fields = get_option( $this->get_value('shortcode-fields-option-name') );
 		
-		$defaults = new TSP_Easy_Dev_Data ( $shortcode_fields );
+		$defaults = new TSP_Easy_Dev_Data ( $shortcode_fields, 'shortcode' );
 
 		$form = null;
 		if ( array_key_exists( $this->get_value('name') . '_form_submit', $_REQUEST ))
@@ -160,6 +160,12 @@ class TSP_Easy_Dev_Options_Facepile extends TSP_Easy_Dev_Options
 			$this->get_value('smarty_cache_dir'), 
 			$this->get_value('smarty_compiled_dir'), true );
 
+		global $facepile;
+		
+		$smarty->assign( 'plugin_title',			TSPFCP_PLUGIN_TITLE);
+		$smarty->assign( 'plugin_links',			implode(' | ', $facepile->get_meta_links()));
+		$smarty->assign( 'EASY_DEV_SETTINGS_UI',	$this->get_value('name') . '_shortcode_settings.tpl');
+		
 		$smarty->assign( 'form_fields',				$form_fields);
 		$smarty->assign( 'message',					$message);
 		$smarty->assign( 'error',					$error);
@@ -167,8 +173,8 @@ class TSP_Easy_Dev_Options_Facepile extends TSP_Easy_Dev_Options
 		$smarty->assign( 'plugin_name',				$this->get_value('name'));
 		$smarty->assign( 'nonce_name',				wp_nonce_field( $this->get_value('name'), $this->get_value('name').'_nonce_name' ));
 		
-		$smarty->display( $this->get_value('name') . '_shortcode_settings.tpl');
-				
+		$smarty->display( 'easy-dev-shortcode-ui.tpl');
+						
 	}//end settings_page
 	
 }//end TSP_Easy_Dev_Options_View

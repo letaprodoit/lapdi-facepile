@@ -3,8 +3,8 @@ Contributors: thesoftwarepeople,sharrondenice
 Donate link: http://www.thesoftwarepeople.com/software/plugins/wordpress/facepile-for-wordpress.html
 Tags: display, faces, tiles, members, list, grid, the software people
 Requires at least: 3.5.1
-Tested up to: 3.6
-Stable tag: 1.1.3
+Tested up to: 4.4.2
+Stable tag: 1.1.4
 License: Apache v2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0
 
@@ -56,8 +56,11 @@ In CSS the attribute to add settings for is `tspfcp_wp_user_table_cell`. Sample 
 
 == Changelog ==
 
+= 1.1.4 =
+* Enhancement: Improved settings UI
+
 = 1.1.3 =
-* Enhancement. Updated support link
+* Enhancement: Updated support link
 
 = 1.1.2 =
 * Updated admin_notices hooks to not use inline functions.
@@ -80,14 +83,17 @@ In CSS the attribute to add settings for is `tspfcp_wp_user_table_cell`. Sample 
 
 == Upgrade notice ==
 
+= 1.1.4 =
+Enhancement: Improved settings UI
+
 = 1.1.3 =
-Enhancement. Updated support link
+Enhancement: Updated support link
 
 = 1.1.2 =
 Maintenance fix.
 
 = 1.1.1 =
-Maintenance fix. Requires update to TSP Easy Dev 1.2
+Maintenance fix: Requires update to TSP Easy Dev 1.2
 
 = 1.1.0 =
 Plugin now requires TSP Easy Dev. New features.
