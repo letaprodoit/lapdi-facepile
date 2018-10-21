@@ -18,7 +18,9 @@
          *
          * @param void
          *
-         * @return output to screen
+         * @return void - output to screen
+         *
+         * @throws SmartyException
          */
         function display_plugin_options_page()
         {
@@ -123,6 +125,8 @@
          * @param array $fields Required - array of current values
          *
          * @return void - display to widget box
+         *
+         * @throws SmartyException
          */
         public function display_form( $fields )
         {
@@ -145,6 +149,8 @@
          * @param string $tag Optional - the name of the shortcode being processed
          *
          * @return string $output if echo is true displays to screen else returns string
+         *
+         * @throws SmartyException
          */
         public function display_widget( $fields, $echo = true, $tag = null )
         {
