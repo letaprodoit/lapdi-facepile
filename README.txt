@@ -1,6 +1,6 @@
 === LAPDI Facepile ===
 Contributors: letaprodoit,sharrondenice
-Donate link: http://www.letaprodoit.com/software/plugins/wordpress/facepile-for-wordpress.html
+Donate link: https://www.letaprodoit.com/apps/plugins/wordpress/facepile-for-wordpress
 Tags: display, faces, tiles, members, list, grid, the software people
 Requires at least: 3.5.1
 Tested up to: 5.0.0
