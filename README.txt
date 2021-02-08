@@ -1,10 +1,10 @@
 === LAPDI Facepile ===
 Contributors: letaprodoit,sharrondenice
-Donate link: https://www.letaprodoit.com/apps/plugins/wordpress/facepile-for-wordpress
+Donate link: https://letaprodoit.com/apps/plugins/wordpress/facepile-for-wordpress
 Tags: display, faces, tiles, members, list, grid, the software people
 Requires at least: 3.5.1
-Tested up to: 5.0.0
-Stable tag: 1.1.5
+Tested up to: 5.6.1
+Stable tag: 1.1.6
 License: Apache v2.0
 License URI: http://www.apache.org/licenses/LICENSE-2.0
 
@@ -55,6 +55,8 @@ In CSS the attribute to add settings for is `tspfcp_wp_user_table_cell`. Sample 
 3. Admin area shortcode settings area.
 
 == Changelog ==
+= 1.1.6 =
+* Maintenance
 
 = 1.1.5 =
 * Enhancement. Requires v2.0.0 of LAPDI Easy Dev
@@ -85,6 +87,9 @@ In CSS the attribute to add settings for is `tspfcp_wp_user_table_cell`. Sample 
 * Launch
 
 == Upgrade notice ==
+
+= 1.1.6 =
+* Maintenance
 
 = 1.1.5 =
 Enhancement. Requires v2.0.0 of LAPDI Easy Dev

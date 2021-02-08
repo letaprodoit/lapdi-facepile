@@ -1,13 +1,13 @@
 <?php
     /*
     Plugin Name: 	LAPDI Facepile
-    Plugin URI: 	https://www.letaprodoit.com/apps/plugins/wordpress/facepile-for-wordpress
+    Plugin URI: 	https://letaprodoit.com/apps/plugins/wordpress/facepile-for-wordpress
     Description: 	Facepile allows you to <strong>add user photo icons to your blog</strong>'s website in grid format. Powered by <strong><a href="http://wordpress.org/plugins/tsp-easy-dev/">LAPDI Easy Dev</a></strong>.
     Author: 		Let A Pro Do IT!
-    Author URI: 	http://www.letaprodoit.com/
-    Version: 		1.1.5
+    Author URI: 	https://letaprodoit.com/
+    Version: 		1.1.6
     Text Domain: 	tspfcp
-    Copyright: 		Copyright � 2013 Let A Pro Do IT!, LLC (www.letaprodoit.com). All rights reserved
+    Copyright: 		Copyright � 2021 Let A Pro Do IT!, LLC (www.letaprodoit.com). All rights reserved
     License: 		APACHE v2.0 (http://www.apache.org/licenses/LICENSE-2.0)
     */
 
